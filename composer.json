@@ -1,0 +1,27 @@
+{
+    "name": "se/opentrans",
+    "type": "library",
+    "description": "Allows to read, create and write OpenTRANS comptaible documents",
+    "keywords": ["opentrans", "document", "serialization", "xml"],
+    "homepage": "https://github.com/sveneisenschmidt/opentrans",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sven Eisenschmidt",
+            "email": "sven.eisenschmidt@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "jms/serializer": "0.13.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "SE\\Component\\OpenTrans\\Tests": "tests/",
+            "SE\\Component\\OpenTrans": "src/"
+        }
+    }
+}

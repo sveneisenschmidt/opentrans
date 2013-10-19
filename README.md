@@ -1,4 +1,4 @@
 opentrans
 =========
 
-Allows to create OpenTRANS comptaible documents from PHP
+Allows to read, create and write OpenTRANS compatible documents from PHP
