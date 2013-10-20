@@ -20,26 +20,33 @@ use \SE\Component\OpenTrans\Exception\UnknownNodeTypeException;
  */
 class NodeLoader
 {   
+    // Factory\Order
+    const FACTORY_ORDER                  = 'factory.order';
+    
     // Node\Order
-    const ORDER_DOCUMENT_NODE       = 'order.document.node';
-    const ORDER_ADDRESS_NODE        = 'order.adress,node';
-    const ORDER_ARTICLEID_NODE      = 'order.articleid.node';
-    const ORDER_ARTICLEPRICE_NODE   = 'order.articleprice.node';  
-    const ORDER_CONTROLINFO_NODE    = 'order.controlinfo.node';
-    const ORDER_HEADER_NODE         = 'order.header.node';
-    const ORDER_ITEM_NODE           = 'order.item.node';
-    const ORDER_INFO_NODE           = 'order.info.node';
-    const ORDER_PARTIES_NODE        = 'order.parties.node';   
-    const ORDER_PARTY_NODE          = 'order.party.node';
-    const ORDER_REMARK_NODE         = 'order.remark.node';
-    const ORDER_SUMMARY_NODE        = 'order.sumary.node';
+    const NODE_ORDER_DOCUMENT       = 'node.order.document';
+    const NODE_ORDER_ADDRESS        = 'node.order.adress';
+    const NODE_ORDER_ARTICLEID      = 'node.order.articleid.';
+    const NODE_ORDER_ARTICLEPRICE   = 'node.order.articleprice';  
+    const NODE_ORDER_CONTROLINFO    = 'node.order.controlinfo';
+    const NODE_ORDER_HEADER         = 'node.order.header';
+    const NODE_ORDER_ITEM           = 'node.order.item';
+    const NODE_ORDER_INFO           = 'node.order.info';
+    const NODE_ORDER_PARTIES        = 'node.node.order.parties';   
+    const NODE_ORDER_PARTY          = 'node.node.order.party';
+    const NODE_ORDER_REMARK         = 'node.order.remark';
+    const NODE_ORDER_SUMMARY        = 'node.order.sumary';
 
     /**
      *
      * @var array
      */
     protected $default = [
-        self::ORDER_DOCUMENT_NODE => '\SE\Component\OpenTrans\Node\Order\DocumentNode',
+        // Factory\Order
+        self::FACTORY_ORDER         => '\SE\Component\OPenTrans\DocumentFactory\OrderFactory',
+        
+        // Node\Order
+        self::NODE_ORDER_DOCUMENT   => '\SE\Component\OpenTrans\Node\Order\DocumentNode',
     ];
 
     /**

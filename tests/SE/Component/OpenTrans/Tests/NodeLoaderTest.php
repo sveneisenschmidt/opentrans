@@ -48,7 +48,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
     public function Default_Mapping_Is_Ensured()
     {
         $map = [
-            $this->loader->get(\SE\Component\OpenTrans\NodeLoader::ORDER_DOCUMENT_NODE),
+            $this->loader->get(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT),
         ];
 
         $this->assertSame([
@@ -62,7 +62,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function Default_Mapping_Returns_Default_Class()
     {
-        $instance = $this->loader->getInstance(\SE\Component\OpenTrans\NodeLoader::ORDER_DOCUMENT_NODE);
+        $instance = $this->loader->getInstance(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $instance);
     }
 
@@ -73,10 +73,10 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
     public function Custom_Mapping_Returns_Custom_Class()
     {
        $class = '\SE\Component\OpenTrans\Tests\Fixtures\CustomOrderDocumentNodeFixture';
-       $this->loader->set(\SE\Component\OpenTrans\NodeLoader::ORDER_DOCUMENT_NODE, $class);
-       $this->assertSame($class, $this->loader->get(\SE\Component\OpenTrans\NodeLoader::ORDER_DOCUMENT_NODE));
+       $this->loader->set(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT, $class);
+       $this->assertSame($class, $this->loader->get(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT));
 
-       $instance = $this->loader->getInstance(\SE\Component\OpenTrans\NodeLoader::ORDER_DOCUMENT_NODE);
+       $instance = $this->loader->getInstance(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT);
        $this->assertInstanceOf($class, $instance);
        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $instance);
     }
