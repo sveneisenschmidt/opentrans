@@ -69,18 +69,6 @@ class OrderInfoNode extends AbstractNode
     /**
      *
      * @Serializer\Expose
-     * @Serializer\SerializedName("PAYMENT")
-     * @Serializer\Type("array")
-     * @Serializer\XmlKeyValuePairs
-     * @Serializer\XmlList(inline=true)
-     *
-     * @var array
-     */
-    protected $customEntries = array();
-
-    /**
-     *
-     * @Serializer\Expose
      * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\RemarkNode>")
      * @Serializer\XmlList(inline=true, entry="REMARK")
      *
@@ -226,38 +214,4 @@ class OrderInfoNode extends AbstractNode
     {
         return $this->payment;
     }
-
-    /**
-     *
-     * @param array $customEntries
-     */
-    public function setCustomEntries(array $customEntries)
-    {
-        $this->customEntries = $customEntries;
-    }
-
-    /**
-     *
-     * @param string $key
-     * @param mixed $value
-     */
-    public function addCustomEntry($key, $value)
-    {
-        $this->customEntries = array_merge(
-            $this->customEntries,
-            array(strtoupper($key) => $value)
-        );
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function getCustomEntries()
-    {
-        return $this->customEntries;
-    }
-
-
-
 }

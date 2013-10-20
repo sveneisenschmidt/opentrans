@@ -21,5 +21,45 @@ use \SE\Component\OpenTrans\Node\NodeInterface;
  */
 abstract class AbstractNode implements NodeInterface
 {
+    /**
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("array")
+     * @Serializer\XmlKeyValuePairs
+     * @Serializer\XmlList(inline=true)
+     *
+     * @var array
+     */
+    protected $customEntries = array();
+    
+    /**
+     *
+     * @param array $customEntries
+     */
+    public function setCustomEntries(array $customEntries)
+    {
+        $this->customEntries = $customEntries;
+    }
 
+    /**
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public function addCustomEntry($key, $value)
+    {
+        $this->customEntries = array_merge(
+            $this->customEntries,
+            array(strtoupper($key) => $value)
+        );
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getCustomEntries()
+    {
+        return $this->customEntries;
+    }
 }
