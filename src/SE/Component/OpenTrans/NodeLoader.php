@@ -19,8 +19,20 @@ use \SE\Component\OpenTrans\Exception\UnknownNodeTypeException;
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  */
 class NodeLoader
-{
-    const ORDER_DOCUMENT_NODE = 'order.document.node';
+{   
+    // Node\Order
+    const ORDER_DOCUMENT_NODE       = 'order.document.node';
+    const ORDER_ADDRESS_NODE        = 'order.adress,node';
+    const ORDER_ARTICLEID_NODE      = 'order.articleid.node';
+    const ORDER_ARTICLEPRICE_NODE   = 'order.articleprice.node';  
+    const ORDER_CONTROLINFO_NODE    = 'order.controlinfo.node';
+    const ORDER_HEADER_NODE         = 'order.header.node';
+    const ORDER_ITEM_NODE           = 'order.item.node';
+    const ORDER_INFO_NODE           = 'order.info.node';
+    const ORDER_PARTIES_NODE        = 'order.parties.node';   
+    const ORDER_PARTY_NODE          = 'order.party.node';
+    const ORDER_REMARK_NODE         = 'order.remark.node';
+    const ORDER_SUMMARY_NODE        = 'order.sumary.node';
 
     /**
      *
