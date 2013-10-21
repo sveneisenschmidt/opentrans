@@ -11,22 +11,28 @@
 namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\NodeLoader\DocumentFactoryInterface;
-
+use \SE\Component\OpenTrans\Node\DocumentFactoryInterface;
+use \SE\Component\OpenTrans\Exception\MissingDocumentTypeException;
+use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
 /**
  *
  * @package SE\Component\OpenTrans
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  */
-class DocumentFactory
+class DocumentFactoryResolver
 {
     protected static $factories = [
-        'order' => NodeLoader::ORDER_FACTORY;         
+        'order' => NodeLoader::FACTORY_ORDER
     ];
     
     /**
      *
-     * @param array $data [$key => $values]
+     * @param array $data ['type' => 'order', ...]
+     *
+     * @throws \InvalidArgumentException
+     * @throws \SE\Component\OpenTrans\Exception\MissingDocumentTypeException
+     * @throws \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException
+     *
      * @return DocumentFactoryInterface
      */
     public static function resolveFactory(NodeLoader $nodeLoader, array $data)
@@ -34,12 +40,15 @@ class DocumentFactory
         if(empty($data) === true) {
             throw new \InvalidArgumentException('Argument #1 must no be empty.');
         }
-        
-        $key = key($data);
+
+        if(isset($data['type']) === false) {
+            throw new MissingDocumentTypeException('Missing type attribute in input data.');
+        }
+        $key = $data['type'];
         if(isset(self::$factories[$key]) === false) {
-            throw new \InvalidArgumentException(sprintf('Unknown factory name %s.', $key));
+            throw new UnknownDocumentFactoryException(sprintf('Unknown factory name %s.', $key));
         } 
         
-        return $nodeLoader::get(self::$factories[$key]); 
+        return $nodeLoader->get(self::$factories[$key]);
     }
 }

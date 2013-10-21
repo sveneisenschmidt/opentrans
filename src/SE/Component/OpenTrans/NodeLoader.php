@@ -43,7 +43,7 @@ class NodeLoader
      */
     protected $default = [
         // Factory\Order
-        self::FACTORY_ORDER         => '\SE\Component\OPenTrans\DocumentFactory\OrderFactory',
+        self::FACTORY_ORDER         => '\SE\Component\OpenTrans\DocumentFactory\OrderFactory',
         
         // Node\Order
         self::NODE_ORDER_DOCUMENT   => '\SE\Component\OpenTrans\Node\Order\DocumentNode',
