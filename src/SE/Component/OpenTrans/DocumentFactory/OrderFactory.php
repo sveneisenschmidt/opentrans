@@ -11,9 +11,12 @@
 namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
+use \SE\Component\OpenTrans\Node\NodeInterface;
 use \SE\Component\OpenTrans\Node\Order\DocumentNode;
 use \SE\Component\OpenTrans\Node\Order\HeaderNode;
 use \SE\Component\OpenTrans\Node\Order\OrderInfoNode;
+use \SE\Component\OpenTrans\Node\Order\SummaryNode;
+
 use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 
 /**
@@ -26,18 +29,18 @@ class OrderFactory implements DocumentFactoryInterface
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
-     * @param \SE\Component\OpenTrans\Node\Order\DocumentNode $document
+     * @param \SE\Component\OpenTrans\Node\Order\DocumentNode $node
      * @return \SE\Component\OpenTrans\Node\NodeInterface
      */
-    public static function create(NodeLoader $loader, $document = null)
+    public static function create(NodeLoader $loader, $node = null)
     {
-        if($document === null || is_object($document) === false) {
-            $document = $loader->getInstance(NodeLoader::NODE_ORDER_DOCUMENT);
+        if($node === null || is_object($node) === false) {
+            $node = $loader->getInstance(NodeLoader::NODE_ORDER_DOCUMENT);
         }
 
-        self::build($loader, $document);
+        self::build($loader, $node);
 
-        return $document;
+        return $node;
     }
 
     /**
@@ -91,5 +94,55 @@ class OrderFactory implements DocumentFactoryInterface
             $orderParties = $loader->getInstance(NodeLoader::NODE_ORDER_PARTIES);
             $node->setOrderParties($orderParties);
         }
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $document
+     * @param array $data
+     * @param boolean $build
+     */
+    public static function load(NodeLoader $loader, NodeInterface $node, array $data, $build = true)
+    {
+        if($node instanceof DocumentNode === false) {
+            throw new \InvalidArgumentException(sprintf(
+                'First agrument must be instance of %s',
+                '\SE\Component\OpenTrans\Node\Order\DocumentNode'
+            ));
+        }
+
+        if($build === true) {
+            self::build($loader, $node);
+        }
+
+        if(isset($data['summary']) === true) {
+            self::loadSummary($node->getSummary(), $data['summary']);
+        }
+    }
+
+    /**
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param array $data
+     */
+    public static function loadSummary(NodeInterface $node, array $data)
+    {
+        foreach($data as $key => $value) {
+            $method = 'set'.self::formatAttribute($key);
+            $node->{$method}($value);
+        }
+    }
+
+    /**
+     * @param string $attribute
+     * @return string
+     */
+    public static function formatAttribute($attribute)
+    {
+        return \preg_replace_callback(
+            '/(^|_|\.)+(.)/', function ($match) {
+                return ('.' === $match[1] ? '_' : '').strtoupper($match[2]);
+            }, $attribute
+        );
     }
 }

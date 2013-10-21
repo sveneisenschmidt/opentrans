@@ -45,8 +45,6 @@ class RemarkNodeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($type, $node->getType());
         $this->assertEquals($value, $node->getValue());
-
-
     }
 
     /**

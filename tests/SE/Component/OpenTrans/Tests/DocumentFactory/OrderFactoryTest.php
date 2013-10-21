@@ -59,4 +59,50 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\OrderInfoNode', $orderInfo);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\OrderPartiesNode', $orderInfo->getOrderParties());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function FactoryLoadData()
+    {
+        $loader = new \SE\Component\OpenTrans\NodeLoader();
+        $object = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::create($loader);
+
+        $data = array(
+            'summary' => array(
+                'total_item_count' => ($totalItemCount = 99)
+            )
+        );
+
+        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::load($loader, $object, $data);
+
+        $this->assertEquals($totalItemCount, $object->getSummary()->getTotalItemCount());
+    }
+
+    /**
+     *
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function FactoryLoadWrongDocument()
+    {
+        $loader = new \SE\Component\OpenTrans\NodeLoader();
+        $stub = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\NodeInterface');
+        $data = array();
+
+        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::load($loader, $stub, $data);
+    }
+
+    /**
+     *
+     * @test
+     */
+    public function ConvertsAttributeNameToMethodName()
+    {
+        $attribute = 'my_test__attribute';
+        $method    = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::formatAttribute($attribute);
+
+        $this->assertEquals('MyTestAttribute', $method);
+    }
 }
