@@ -57,8 +57,5 @@ class ItemNodeTest extends \PHPUnit_Framework_TestCase
         $articlePrice = new \SE\Component\OpenTrans\Node\Order\ArticlePriceNode();
         $node->setArticlePrice($articlePrice);
         $this->assertSame($articlePrice, $node->getArticlePrice());
-
-
-
     }
 }
