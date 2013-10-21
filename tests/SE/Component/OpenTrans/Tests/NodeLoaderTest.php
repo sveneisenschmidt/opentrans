@@ -47,13 +47,13 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function Default_Mapping_Is_Ensured()
     {
-        $map = [
-            $this->loader->get(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT),
-        ];
+        $map = array(
+            $this->loader->get(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT)
+        );
 
-        $this->assertSame([
-            '\SE\Component\OpenTrans\Node\Order\DocumentNode',
-        ], $map);
+        $this->assertSame(array(
+            '\SE\Component\OpenTrans\Node\Order\DocumentNode'
+        ), $map);
     }
 
     /**
