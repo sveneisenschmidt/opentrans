@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SE\Component\OpenTrans\Tests;
+namespace SE\Component\OpenTrans\Tests\Node;
 
 /**
  *

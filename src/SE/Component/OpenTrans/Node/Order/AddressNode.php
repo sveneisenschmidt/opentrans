@@ -321,4 +321,6 @@ class AddressNode extends AbstractNode
     {
         return $this->chargeVat;
     }
+
+
 }
