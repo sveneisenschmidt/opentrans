@@ -164,10 +164,6 @@ class OrderInfoNode extends AbstractNode
      */
     public function getOrderParties()
     {
-        if($this->orderParties === null) {
-            $this->orderParties = new OrderPartiesNode();
-        }
-
         return $this->orderParties;
     }
 

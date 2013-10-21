@@ -21,9 +21,10 @@ interface DocumentFactoryInterface
 {
     /**
      *
-     * @param \SE\Component\OpenTrans\NodeLoader $nodeLoader
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param array $data
      * @return \SE\Component\OpenTrans\Node\NodeInterface
      */    
-    public function create(NodeLoader $nodeLoader, array $data = [])
+    public static function create(NodeLoader $loader);
+
 }

@@ -24,40 +24,9 @@ class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
     public function ResolveValidDocumentDataFor_Order()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $data = [
-            'type' => 'order'
-        ];
-
-        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, $data);
+        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, 'order');
         $this->assertSame('\SE\Component\OpenTrans\DocumentFactory\OrderFactory', $factory);
     }
-
-    /**
-     *
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function EmptyDocumentData()
-    {
-        $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $data = [];
-
-        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, $data);
-    }
-
-    /**
-     *
-     * @test
-     * @expectedException \SE\Component\OpenTrans\Exception\MissingDocumentTypeException
-     */
-    public function MissingTypeInDocumentData()
-    {
-        $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $data = [sha1(microtime()) => sha1(microtime())];
-
-        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, $data);
-    }
-
     /**
      *
      * @test
@@ -66,8 +35,8 @@ class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
     public function UnknownTypeInDocumentData()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $data = ['type' => sha1(microtime())];
+        $documentType = sha1(microtime());
 
-        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, $data);
+        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, $documentType);
     }
 }

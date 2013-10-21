@@ -32,7 +32,7 @@ class HeaderNode extends AbstractNode
      * @Serializer\SerializedName("CONTROL_INFO")
      * @Serializer\Type("SE\Component\OpenTrans\Node\Order\ControlInfoNode")
      *
-     * @var array|\SE\Component\OpenTrans\Node\Order\ControlInfoNode
+     * @var \SE\Component\OpenTrans\Node\Order\ControlInfoNode
      */
     protected $controlInfo;
 
@@ -42,13 +42,13 @@ class HeaderNode extends AbstractNode
      * @Serializer\SerializedName("ORDER_INFO")
      * @Serializer\Type("SE\Component\OpenTrans\Node\Order\OrderInfoNode")
      *
-     * @var array|\SE\Component\OpenTrans\Node\Order\OrderInfoNode
+     * @var \SE\Component\OpenTrans\Node\Order\OrderInfoNode
      */
     protected $orderInfo;
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\ControlInfoNode $controlInfo
+     * @param \SE\Component\OpenTrans\Node\Order\ControlInfoNode $controlInfo
      */
     public function setControlInfo(ControlInfoNode $controlInfo)
     {
@@ -57,7 +57,7 @@ class HeaderNode extends AbstractNode
 
     /**
      *
-     * @return array|\SE\Component\OpenTrans\Node\Order\ControlInfoNode
+     * @return\SE\Component\OpenTrans\Node\Order\ControlInfoNode
      */
     public function getControlInfo()
     {
@@ -66,7 +66,7 @@ class HeaderNode extends AbstractNode
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\OrderInfoNode $orderInfo
+     * @param \SE\Component\OpenTrans\Node\Order\OrderInfoNode $orderInfo
      */
     public function setOrderInfo(OrderInfoNode $orderInfo)
     {
@@ -75,7 +75,7 @@ class HeaderNode extends AbstractNode
 
     /**
      *
-     * @return array|\SE\Component\OpenTrans\Node\Order\OrderInfoNode
+     * @return \SE\Component\OpenTrans\Node\Order\OrderInfoNode
      */
     public function getOrderInfo()
     {
