@@ -42,7 +42,7 @@ class NodeLoader
      *
      * @var array
      */
-    protected $default = [
+    protected $default = array(
         // Factory\Order
         self::FACTORY_ORDER         => '\SE\Component\OpenTrans\DocumentFactory\OrderFactory',
         
@@ -59,14 +59,14 @@ class NodeLoader
         self::NODE_ORDER_PARTIES        => '\SE\Component\OpenTrans\Node\Order\OrderPartiesNode',
         self::NODE_ORDER_PARTY          => '\SE\Component\OpenTrans\Node\Order\PartyNode',
         self::NODE_ORDER_PARTYID        => '\SE\Component\OpenTrans\Node\Order\PartyIdNode',
-        self::NODE_ORDER_REMARK         => '\SE\Component\OpenTrans\Node\Order\SummaryNode',
-    ];
+        self::NODE_ORDER_REMARK         => '\SE\Component\OpenTrans\Node\Order\RemarkNode',
+    );
 
     /**
      *
      * @var array
      */
-    protected $custom = [];
+    protected $custom = array();
 
     /**
      *
