@@ -38,7 +38,13 @@ abstract class AbstractNode implements NodeInterface
      */
     public function setCustomEntries(array $customEntries)
     {
-        $this->customEntries = $customEntries;
+        if(empty($customEntries) === true) {
+            $this->customEntries = $customEntries;
+        }
+
+        foreach($customEntries as $key => $value) {
+            $this->addCustomEntry($key, $value);
+        }
     }
 
     /**
