@@ -88,7 +88,7 @@ class OrderInfoNode extends AbstractNode
 
     /**
      *
-     * @param \SE\Component\OpenTrans\Node\Order\RemarkNode $remarks
+     * @param \SE\Component\OpenTrans\Node\Order\RemarkNode $remark
      */
     public function addRemark(RemarkNode $remark)
     {
@@ -133,7 +133,7 @@ class OrderInfoNode extends AbstractNode
 
     /**
      *
-     * @param string $orderDate
+     * @param \DateTime $orderDate
      */
     public function setOrderDate(\DateTime $orderDate)
     {
@@ -187,7 +187,8 @@ class OrderInfoNode extends AbstractNode
 
     /**
      *
-     * @param array $payment
+     * @param string $key
+     * @param array $options
      */
     public function setPayment($key, $options = array())
     {

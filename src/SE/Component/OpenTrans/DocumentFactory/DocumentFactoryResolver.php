@@ -20,9 +20,9 @@ use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
  */
 class DocumentFactoryResolver
 {
-    protected static $factories = [
+    protected static $factories = array(
         'order' => NodeLoader::FACTORY_ORDER
-    ];
+    );
     
     /**
      *

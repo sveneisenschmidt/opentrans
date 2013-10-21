@@ -63,18 +63,18 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
     public function SetAndGetPayment()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
-        $payment = [
+        $payment = array(
             'bank_account' => ($bankAccount = rand(100000,9999999))
-        ];
+        );
 
         $this->assertEmpty($node->getPayment());
         $node->setPayment('cash', $payment);
 
-        $this->assertEquals([
-            'CASH' => [
+        $this->assertEquals(array(
+            'CASH' => array(
                 'BANK_ACCOUNT' => $bankAccount
-            ]
-        ], $node->getPayment());
+            )
+        ), $node->getPayment());
     }
 
     /**
@@ -88,12 +88,12 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $remark1 = new \SE\Component\OpenTrans\Node\Order\RemarkNode();
         $remark2 = new \SE\Component\OpenTrans\Node\Order\RemarkNode();
 
-        $node->setRemarks([$remark1, $remark2]);
+        $node->setRemarks(array($remark1, $remark2));
         $this->assertCount(2, $node->getRemarks());
-        $this->assertSame([$remark1, $remark2], $node->getRemarks());
+        $this->assertSame(array($remark1, $remark2), $node->getRemarks());
 
         $node->addRemark($remark2);
         $this->assertCount(3, $node->getRemarks());
-        $this->assertSame([$remark1, $remark2, $remark2], $node->getRemarks());
+        $this->assertSame(array($remark1, $remark2, $remark2), $node->getRemarks());
     }
 }

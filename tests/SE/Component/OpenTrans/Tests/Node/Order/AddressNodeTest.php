@@ -82,11 +82,11 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
     public function SetFullname()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\AddressNode();
-        $name = implode(' ', [
+        $name = implode(' ', array(
             $name1 = sha1(microtime(true)),
             $name2 = sha1(microtime(true)),
             $name3 = sha1(microtime(true)),
-        ]);
+        ));
 
         $node->setFullName($name);
         $this->assertEquals($name1, $node->getName1());

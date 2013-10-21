@@ -154,14 +154,14 @@ class OrderPartiesNode extends AbstractNode
      *
      * @param array|\SE\Component\OpenTrans\Node\Order\PartyNode $shippingParties
      */
-    public function setShippingParties(PartyNode $shippingParties)
+    public function setShippingParties(array $shippingParties)
     {
         $this->shippingParties = $shippingParties;
     }
 
     /**
      *
-     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $shippingParties
+     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $shippingParty
      */
     public function addShippingParty(PartyNode $shippingParty)
     {

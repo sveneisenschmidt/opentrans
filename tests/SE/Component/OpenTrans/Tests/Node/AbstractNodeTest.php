@@ -34,13 +34,13 @@ class AbstractNodeTest extends \PHPUnit_Framework_TestCase
     public function CustomEntriesConvertsToUppercase()
     {
         $stub = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\AbstractNode');
-        $entries = [
-            'field1' => [
+        $entries = array(
+            'field1' => array(
                 'value1' => sha1(microtime()),
                 'value2' => sha1(microtime()),
-            ],
+            ),
             'field2' => sha1(microtime())
-        ];
+        );
 
         $stub->setCustomEntries($entries);
         $this->assertNotEquals($entries, $stub->getCustomEntries());
@@ -53,18 +53,18 @@ class AbstractNodeTest extends \PHPUnit_Framework_TestCase
     public function CustomEntriesGetsCleared()
     {
         $stub = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\AbstractNode');
-        $entries = [
-            'field1' => [
+        $entries = array(
+            'field1' => array(
                 'value1' => sha1(microtime()),
                 'value2' => sha1(microtime()),
-            ],
+            ),
             'field2' => sha1(microtime())
-        ];
+        );
 
         $stub->setCustomEntries($entries);
         $this->assertNotEmpty($stub->getCustomEntries());
 
-        $stub->setCustomEntries([]);
+        $stub->setCustomEntries(array());
         $this->assertEmpty($stub->getCustomEntries());
     }
 }

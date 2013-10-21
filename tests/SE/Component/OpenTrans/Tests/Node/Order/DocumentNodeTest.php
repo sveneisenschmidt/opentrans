@@ -63,12 +63,12 @@ class DocumentNodeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEmpty($node->getItems());
 
-        $node->setItems([$item1, $item2]);
+        $node->setItems(array($item1, $item2));
         $this->assertCount(2, $node->getItems());
-        $this->assertEquals($node->getItems(), [$item1, $item2]);
+        $this->assertEquals($node->getItems(), array($item1, $item2));
 
         $node->addItem($item2);
         $this->assertCount(3, $node->getItems());
-        $this->assertEquals($node->getItems(), [$item1, $item2, $item2]);
+        $this->assertEquals($node->getItems(), array($item1, $item2, $item2));
     }
 }
