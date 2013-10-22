@@ -51,7 +51,7 @@ class OrderFactory extends AbstractDocumentFactory
      * @param \SE\Component\OpenTrans\Node\Order\DocumentNode $node
      * @return \SE\Component\OpenTrans\Node\NodeInterface
      */
-    public function create($node = null)
+    public function createDocument($node = null)
     {
         if($node === null || is_object($node) === false) {
             $node = $this->loader->getInstance(NodeLoader::NODE_ORDER_DOCUMENT);

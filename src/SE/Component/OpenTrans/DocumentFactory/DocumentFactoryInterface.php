@@ -31,7 +31,7 @@ interface DocumentFactoryInterface
      * @param \SE\Component\OpenTrans\Node\NodeInterface $node
      * @return \SE\Component\OpenTrans\Node\NodeInterface
      */    
-    public function create($node = null);
+    public function createDocument($node = null);
 
     /**
      *

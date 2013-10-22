@@ -26,7 +26,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
         $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
-        $node  = $factory->create();
+        $node  = $factory->createDocument();
 
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $node);
     }
@@ -39,7 +39,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
         $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
-        $node  = $factory->create();
+        $node  = $factory->createDocument();
         $header = $node->getHeader();
 
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\HeaderNode', $header);
@@ -55,7 +55,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
         $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
-        $node  = $factory->create();
+        $node  = $factory->createDocument();
         $header = $node->getHeader();
         $orderInfo = $header->getOrderInfo();
 
@@ -101,7 +101,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
         $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
-        $object  = $factory->create();
+        $object  = $factory->createDocument();
 
         $data = array(
             'header' => array(

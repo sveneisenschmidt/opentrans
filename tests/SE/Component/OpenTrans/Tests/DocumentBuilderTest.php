@@ -69,7 +69,7 @@ class DocumentBuilderTest extends \PHPUnit_Framework_TestCase
         $serializer = $this->getMockForAbstractClass('\JMS\Serializer\Serializer', array(), '', false);
 
         $factory->expects($this->once())
-            ->method('create')
+            ->method('createDocument')
             ->will($this->returnValue($document = new \StdClass()))
         ;
 
@@ -94,7 +94,7 @@ class DocumentBuilderTest extends \PHPUnit_Framework_TestCase
         $document = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\NodeInterface');
 
         $factory->expects($this->once())
-            ->method('create')
+            ->method('createDocument')
             ->will($this->returnValue($document))
         ;
 

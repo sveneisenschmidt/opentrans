@@ -74,7 +74,7 @@ class DocumentBuilder
      */
     public function build()
     {
-        $this->document = $this->factory->create();
+        $this->document = $this->factory->createDocument();
     }
 
     /**
