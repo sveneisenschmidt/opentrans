@@ -41,16 +41,22 @@ class ArticleIdNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\ArticleIdNode();
 
-        $node->setId($id = sha1(uniqid(microtime(true))));
-        $this->assertEquals($id, $node->getId());
+        $node->setSupplierAid($supplierAid = sha1(uniqid(microtime(true))));
+        $this->assertEquals($supplierAid, $node->getSupplierAid());
 
-        $node->setName($name = sha1(uniqid(microtime(true))));
-        $this->assertEquals($name, $node->getName());
+        $node->setBuyerAid($buyerAid = sha1(uniqid(microtime(true))));
+        $this->assertEquals($buyerAid, $node->getBuyerAid());
 
-        $node->setNote($note = sha1(uniqid(microtime(true))));
-        $this->assertEquals($note, $node->getNote());
+        $node->setInternationalAid($internationalAid = sha1(uniqid(microtime(true))));
+        $this->assertEquals($internationalAid, $node->getInternationalAid());
 
-        $node->setName($articleName = sha1(uniqid(microtime(true))));
-        $this->assertEquals($articleName, $node->getName());
+        $node->setSupplierAid($supplierAid = sha1(uniqid(microtime(true))));
+        $this->assertEquals($supplierAid, $node->getSupplierAid());
+
+        $node->setDescriptionShort($short = sha1(uniqid(microtime(true))));
+        $this->assertEquals($short, $node->getDescriptionShort());
+
+        $node->setDescriptionLong($long = sha1(uniqid(microtime(true))));
+        $this->assertEquals($long, $node->getDescriptionLong());
     }
 }

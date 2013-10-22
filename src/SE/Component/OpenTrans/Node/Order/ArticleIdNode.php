@@ -32,17 +32,27 @@ class ArticleIdNode extends AbstractNode
      *
      * @var string
      */
-    protected $id;
+    protected $supplierAid;
 
     /**
      *
      * @Serializer\Expose
-     * @Serializer\SerializedName("ITEM_NOTE")
+     * @Serializer\SerializedName("BUYER_AID")
      * @Serializer\Type("string")
      *
      * @var string
      */
-    protected $note;
+    protected $buyerAid;
+
+    /**
+     *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("INTERNATIONAL_AID")
+     * @Serializer\Type("string")
+     *
+     * @var string
+     */
+    protected $internationalAid;
 
     /**
      *
@@ -52,59 +62,105 @@ class ArticleIdNode extends AbstractNode
      *
      * @var string
      */
-    protected $name;
+    protected $descriptionShort;
 
     /**
      *
-     * @param string $id
+     * @Serializer\Expose
+     * @Serializer\SerializedName("DESCRIPTION_LONG")
+     * @Serializer\Type("string")
+     *
+     * @var string
      */
-    public function setId($id)
+    protected $descriptionLong;
+
+    /**
+     *
+     * @param string $buyerAid
+     */
+    public function setBuyerAid($buyerAid)
     {
-        $this->id = $id;
+        $this->buyerAid = $buyerAid;
     }
 
     /**
      *
      * @return string
      */
-    public function getId()
+    public function getBuyerAid()
     {
-        return $this->id;
+        return $this->buyerAid;
     }
 
     /**
      *
-     * @param string $name
+     * @param string $internationalAid
      */
-    public function setName($name)
+    public function setInternationalAid($internationalAid)
     {
-        $this->name = $name;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     *
-     * @param string $note
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
+        $this->internationalAid = $internationalAid;
     }
 
     /**
      *
      * @return string
      */
-    public function getNote()
+    public function getInternationalAid()
     {
-        return $this->note;
+        return $this->internationalAid;
+    }
+
+    /**
+     *
+     * @param string $supplierAid
+     */
+    public function setSupplierAid($supplierAid)
+    {
+        $this->supplierAid = $supplierAid;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getSupplierAid()
+    {
+        return $this->supplierAid;
+    }
+
+    /**
+     *
+     * @param string $descriptionShort
+     */
+    public function setDescriptionShort($descriptionShort)
+    {
+        $this->descriptionShort = $descriptionShort;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDescriptionShort()
+    {
+        return $this->descriptionShort;
+    }
+
+    /**
+     *
+     * @param string $descriptionLong
+     */
+    public function setDescriptionLong($descriptionLong)
+    {
+        $this->descriptionLong = $descriptionLong;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDescriptionLong()
+    {
+        return $this->descriptionLong;
     }
 }

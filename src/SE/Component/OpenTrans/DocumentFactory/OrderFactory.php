@@ -224,23 +224,17 @@ class OrderFactory extends AbstractDocumentFactory
                 if(isset($itemData['article_price']) === true && is_array($itemData) === true) {
                     self::loadScalarArrayData($itemNode->getArticlePrice(), $itemData['article_price']);
                 }
-
-                print_r($itemNode);
             }
         }
-
-
-
-        die();
     }
 
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
-     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param \SE\Component\OpenTrans\Node\Order\OrderInfoNode $node
      * @param array $data
      */
-    public static function loadOrderInfo(NodeLoader $loader, NodeInterface $node, array $data)
+    public static function loadOrderInfo(NodeLoader $loader, OrderInfoNode $node, array $data)
     {
         self::loadScalarArrayData($node, $data, array('remarks', 'order_parties', 'payment'));
 
@@ -256,6 +250,9 @@ class OrderFactory extends AbstractDocumentFactory
             self::loadOrderParties($loader, $node->getOrderParties(), $data['order_parties']);
         }
 
+        if(isset($data['order_date']) === true && is_object($data['order_date']) === true) {
+            $node->setOrderDate($data['order_date']);
+        }
     }
 
     /**
