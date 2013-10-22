@@ -116,4 +116,18 @@ class DocumentBuilder
     {
         return $this->factory;
     }
+
+    /**
+     *
+     * @throws \SE\Component\OpenTrans\Exception\MissingDocumentException
+     * @return string
+     */
+    public function toString()
+    {
+        if($this->document === null) {
+            throw new MissingDocumentException('No Document built. Please call ::build first.');
+        }
+
+        return $this->serializer->serialize($this->document, 'xml');
+    }
 }

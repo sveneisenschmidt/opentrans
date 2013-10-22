@@ -19,7 +19,7 @@ use \SE\Component\OpenTrans\Node\AbstractNode;
  * @package SE\Component\OpenTrans
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  *
- * @Serializer\XmlRoot("ARTICLE_ID")
+ * @Serializer\XmlRoot("ADDRESS")
  * @Serializer\ExclusionPolicy("all")
  */
 class AddressNode extends AbstractNode

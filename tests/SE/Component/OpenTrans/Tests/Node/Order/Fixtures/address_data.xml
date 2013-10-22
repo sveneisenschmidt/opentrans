@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ADDRESS>
+  <NAME><![CDATA[%NAME1%]]></NAME>
+  <NAME2><![CDATA[%NAME2%]]></NAME2>
+  <NAME3><![CDATA[%NAME3%]]></NAME3>
+  <STREET><![CDATA[%STREET%]]></STREET>
+  <ZIP><![CDATA[%ZIP%]]></ZIP>
+  <CITY><![CDATA[%CITY%]]></CITY>
+  <COUNTRY><![CDATA[%COUNTRY%]]></COUNTRY>
+  <PHONE><![CDATA[%PHONE%]]></PHONE>
+  <EMAIL><![CDATA[%EMAIL%]]></EMAIL>
+  <CHARGE_VAT><![CDATA[Y]]></CHARGE_VAT>
+</ADDRESS>

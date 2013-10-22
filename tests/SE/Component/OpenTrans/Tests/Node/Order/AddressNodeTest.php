@@ -93,4 +93,49 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name2, $node->getName2());
         $this->assertEquals($name3, $node->getName3());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\AddressNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $this->assertEquals(
+            file_get_contents(__DIR__.'/Fixtures/address.xml'),
+            $serializer->serialize($node, 'xml')
+        );
+
+        $node->setName1($name1 = sha1(uniqid(microtime(true))));
+        $node->setName2($name2 = sha1(uniqid(microtime(true))));
+        $node->setName3($name3 = sha1(uniqid(microtime(true))));
+        $node->setEmail($email = sha1(uniqid(microtime(true))));
+        $node->setCity($city = sha1(uniqid(microtime(true))));
+        $node->setCountry($country = sha1(uniqid(microtime(true))));
+        $node->setChargeVat('Y');
+        $node->setPhone($phone = rand(10000,100000000));
+        $node->setPostCode($postCode = rand(10000,99999));
+        $node->setStreet($street = sha1(uniqid(microtime(true))));
+
+        $contents = str_replace(
+            array(
+                '%NAME1%', '%NAME2%', '%NAME3%', '%EMAIL%',
+                '%CITY%', '%COUNTRY%', '%PHONE%', '%ZIP%', '%STREET%',
+            ),
+            array(
+                $name1, $name2, $name3, $email,
+                $city,  $country, $phone, $postCode, $street
+            ),
+            file_get_contents(__DIR__.'/Fixtures/address_data.xml')
+        );
+
+        $this->assertEquals(
+            $contents,
+            $serializer->serialize($node, 'xml')
+        );
+    }
+
+
 }
