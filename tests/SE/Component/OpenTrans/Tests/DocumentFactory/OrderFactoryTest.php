@@ -339,7 +339,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(($articlePrice2 * $quantity2), $articlePriceNode2->getPriceAmount());
         $this->assertEquals($articleType2, $articlePriceNode2->getType());
     }
-    
+
     /**
      *
      * @test
