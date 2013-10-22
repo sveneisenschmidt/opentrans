@@ -48,5 +48,8 @@ class PartyNodeTest extends \PHPUnit_Framework_TestCase
         $partyId = new \SE\Component\OpenTrans\Node\Order\PartyIdNode();
         $node->setPartyId($partyId);
         $this->assertSame($partyId, $node->getPartyId());
+
+        $node->setIsDeliveryParty($isDeliveryParty = (bool)rand(0,1));
+        $this->assertEquals($isDeliveryParty, $node->getIsDeliveryParty());
     }
 }

@@ -11,7 +11,7 @@
 namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\Node\DocumentFactoryInterface;
+use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
 /**
  *
@@ -30,7 +30,7 @@ class DocumentFactoryResolver
      * @param string $documentType
      * @throws \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException
      *
-     * @return DocumentFactoryInterface
+     * @return \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface
      */
     public static function resolveFactory(NodeLoader $loader, $documentType)
     {

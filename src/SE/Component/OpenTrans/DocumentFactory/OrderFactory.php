@@ -12,19 +12,22 @@ namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
 use \SE\Component\OpenTrans\Node\NodeInterface;
+use \SE\Component\OpenTrans\Node\AbstractNode;
 use \SE\Component\OpenTrans\Node\Order\DocumentNode;
 use \SE\Component\OpenTrans\Node\Order\HeaderNode;
 use \SE\Component\OpenTrans\Node\Order\OrderInfoNode;
 use \SE\Component\OpenTrans\Node\Order\SummaryNode;
+use \SE\Component\OpenTrans\Node\Order\OrderPartiesNode;
+use \SE\Component\OpenTrans\Node\Order\PartyNode;
 
-use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
+use \SE\Component\OpenTrans\DocumentFactory\AbstractDocumentFactory;
 
 /**
  *
  * @package SE\Component\OpenTrans
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  */
-class OrderFactory implements DocumentFactoryInterface
+class OrderFactory extends AbstractDocumentFactory
 {
     /**
      *
@@ -99,6 +102,24 @@ class OrderFactory implements DocumentFactoryInterface
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @return \SE\Component\OpenTrans\Node\PartyNode
+     */
+    public static function buildOrderParty(NodeLoader $loader, PartyNode $node)
+    {
+        if(($partyId = $node->getPartyId()) === null) {
+            $partyId = $loader->getInstance(NodeLoader::NODE_ORDER_PARTYID);
+            $node->setPartyId($partyId);
+        }
+
+        if(($address = $node->getAddress()) === null) {
+            $address = $loader->getInstance(NodeLoader::NODE_ORDER_ADDRESS);
+            $node->setAddress($address);
+        }
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param \SE\Component\OpenTrans\Node\NodeInterface $document
      * @param array $data
      * @param boolean $build
@@ -116,33 +137,125 @@ class OrderFactory implements DocumentFactoryInterface
             self::build($loader, $node);
         }
 
+        self::loadScalarArrayData($node, $data, array('summary', 'header'));
+
         if(isset($data['summary']) === true) {
-            self::loadSummary($node->getSummary(), $data['summary']);
+            self::loadSummary($loader, $node->getSummary(), $data['summary']);
+        }
+
+        if(isset($data['header']) === true) {
+            self::loadHeader($loader, $node->getHeader(), $data['header']);
         }
     }
 
     /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param \SE\Component\OpenTrans\Node\NodeInterface $node
      * @param array $data
      */
-    public static function loadSummary(NodeInterface $node, array $data)
+    public static function loadSummary(NodeLoader $loader, NodeInterface $node, array $data)
     {
-        foreach($data as $key => $value) {
-            $method = 'set'.self::formatAttribute($key);
-            $node->{$method}($value);
+        self::loadScalarArrayData($node, $data);
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param array $data
+     */
+    public static function loadHeader(NodeLoader $loader, NodeInterface $node, array $data)
+    {
+        self::loadScalarArrayData($node, $data, array('control_info', 'order_info'));
+
+        if(isset($data['control_info'])  === true) {
+            self::loadScalarArrayData($node->getControlInfo(), $data['control_info']);
+        }
+
+        if(isset($data['order_info'])  === true) {
+            self::loadOrderInfo($loader, $node->getOrderInfo(), $data['order_info']);
         }
     }
 
     /**
-     * @param string $attribute
-     * @return string
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param array $data
      */
-    public static function formatAttribute($attribute)
+    public static function loadOrderInfo(NodeLoader $loader, NodeInterface $node, array $data)
     {
-        return \preg_replace_callback(
-            '/(^|_|\.)+(.)/', function ($match) {
-                return ('.' === $match[1] ? '_' : '').strtoupper($match[2]);
-            }, $attribute
-        );
+        self::loadScalarArrayData($node, $data, array('remarks', 'order_parties', 'payment'));
+
+        if(isset($data['payment']) === true) {
+            $node->setPayment($data['payment']);
+        }
+
+        if(isset($data['remarks']) === true && is_array($data['remarks']) === true) {
+            self::loadRemarks($loader, $node, $data['remarks']);
+        }
+
+        if(isset($data['order_parties']) === true && is_array($data['order_parties']) === true) {
+            self::loadOrderParties($loader, $node->getOrderParties(), $data['order_parties']);
+        }
+
     }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param array $data
+     */
+    public static function loadRemarks(NodeLoader $loader, NodeInterface $node, array $data)
+    {
+        foreach($data as $remarkData) {
+            if(is_array($remarkData) === true) {
+                $remark = $loader->getInstance(NodeLoader::NODE_ORDER_REMARK);
+                $node->addRemark($remark);
+
+                self::loadScalarArrayData($remark, $remarkData);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\OrderPartiesNode $node
+     * @param array $data
+     */
+    public static function loadOrderParties(NodeLoader $loader, OrderPartiesNode $node, array $data)
+    {
+        $setters = array(
+            'buyer_parties'     => 'addBuyerParty',
+            'invoice_parties'   => 'addInvoiceParty',
+            'shipping_parties'  => 'addShippingParty',
+            'supplier_parties'  => 'addSupplierParty',
+        );
+        $parties = array_keys($setters);
+
+        foreach($data as $name => $values) {
+            if(in_array($name, $parties) === true && is_array($values) === true) {
+                $setter = $setters[$name];
+                foreach($values as $partyData) {
+                    $partyNode = $loader->getInstance(NodeLoader::NODE_ORDER_PARTY);
+                    call_user_func_array(array($node, $setter), array($partyNode));
+
+                    self::buildOrderParty($loader, $partyNode);
+                    self::loadScalarArrayData($partyNode, $partyData, array('party_id' ,'address'));
+
+                    if(isset($partyData['party_id']) === true && is_array($partyData['party_id']) === true) {
+                        self::loadScalarArrayData($partyNode->getPartyId(), $partyData['party_id']);
+                    }
+                    if(isset($partyData['address']) === true && is_array($partyData['address']) === true) {
+                        self::loadScalarArrayData($partyNode->getAddress(), $partyData['address']);
+                    }
+                }
+            }
+        }
+    }
+
+
 }

@@ -187,20 +187,11 @@ class OrderInfoNode extends AbstractNode
 
     /**
      *
-     * @param string $key
-     * @param array $options
+     * @param mixed $payment
      */
-    public function setPayment($key, $options = array())
+    public function setPayment($payment)
     {
-        $data = '';
-        if(empty($options) === false) {
-            $data = array();
-            foreach($options as $option => $value) {
-                $data[strtoupper($option)] = $value;
-            }
-        }
-
-        $this->payment = array(strtoupper($key) => $data);
+        $this->payment = $payment;
     }
 
     /**

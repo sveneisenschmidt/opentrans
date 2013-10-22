@@ -56,7 +56,7 @@ abstract class AbstractNode implements NodeInterface
     {
         $this->customEntries = array_merge(
             $this->customEntries,
-            array(strtoupper($key) => $value)
+            array($key => $value)
         );
     }
 

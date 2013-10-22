@@ -43,7 +43,7 @@ class AbstractNodeTest extends \PHPUnit_Framework_TestCase
         );
 
         $stub->setCustomEntries($entries);
-        $this->assertNotEquals($entries, $stub->getCustomEntries());
+        $this->assertEquals($entries, $stub->getCustomEntries());
     }
 
     /**

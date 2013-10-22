@@ -64,17 +64,14 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
         $payment = array(
-            'bank_account' => ($bankAccount = rand(100000,9999999))
+            'cash' => array(
+                'bank_account' => ($bankAccount = rand(100000,9999999))
+            )
         );
 
         $this->assertEmpty($node->getPayment());
-        $node->setPayment('cash', $payment);
-
-        $this->assertEquals(array(
-            'CASH' => array(
-                'BANK_ACCOUNT' => $bankAccount
-            )
-        ), $node->getPayment());
+        $node->setPayment($payment);
+        $this->assertEquals($payment, $node->getPayment());
     }
 
     /**

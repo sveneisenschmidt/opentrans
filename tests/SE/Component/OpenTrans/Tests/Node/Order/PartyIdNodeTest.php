@@ -46,5 +46,6 @@ class PartyIdNode extends \PHPUnit_Framework_TestCase
 
         $node->setValue($value = sha1(microtime(true)));
         $this->assertEquals($value, $node->getValue());
+
     }
 }

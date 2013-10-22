@@ -60,7 +60,7 @@ class OrderPartiesNode extends AbstractNode
     /**
      *
      * @Serializer\Expose
-     * @Serializer\SerializedName("SHIPPING_PARTY")
+     * @Serializer\SerializedName("SHIPMENT_PARTIES")
      * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\PartyNode>")
      * @Serializer\XmlList(inline=false, entry="PARTY")
      *
