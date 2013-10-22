@@ -19,6 +19,7 @@ use \SE\Component\OpenTrans\Node\Order\OrderInfoNode;
 use \SE\Component\OpenTrans\Node\Order\SummaryNode;
 use \SE\Component\OpenTrans\Node\Order\OrderPartiesNode;
 use \SE\Component\OpenTrans\Node\Order\PartyNode;
+use \SE\Component\OpenTrans\Node\Order\ItemNode;
 
 use \SE\Component\OpenTrans\DocumentFactory\AbstractDocumentFactory;
 
@@ -120,6 +121,24 @@ class OrderFactory extends AbstractDocumentFactory
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @return \SE\Component\OpenTrans\Node\ItemNode
+     */
+    public static function buildItem(NodeLoader $loader, ItemNode $node)
+    {
+        if(($articleId = $node->getArticleId()) === null) {
+            $articleId = $loader->getInstance(NodeLoader::NODE_ORDER_ARTICLEID);
+            $node->setArticleId($articleId);
+        }
+
+        if(($articlePrice = $node->getArticlePrice()) === null) {
+            $articlePrice = $loader->getInstance(NodeLoader::NODE_ORDER_ARTICLEPRICE);
+            $node->setArticlePrice($articlePrice);
+        }
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param \SE\Component\OpenTrans\Node\NodeInterface $document
      * @param array $data
      * @param boolean $build
@@ -137,7 +156,7 @@ class OrderFactory extends AbstractDocumentFactory
             self::build($loader, $node);
         }
 
-        self::loadScalarArrayData($node, $data, array('summary', 'header'));
+        self::loadScalarArrayData($node, $data, array('summary', 'header', 'items'));
 
         if(isset($data['summary']) === true) {
             self::loadSummary($loader, $node->getSummary(), $data['summary']);
@@ -146,15 +165,19 @@ class OrderFactory extends AbstractDocumentFactory
         if(isset($data['header']) === true) {
             self::loadHeader($loader, $node->getHeader(), $data['header']);
         }
+
+        if(isset($data['items']) === true && is_array($data['items']) === true) {
+            self::loadItems($loader, $node, $data['items']);
+        }
     }
 
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
-     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param \SE\Component\OpenTrans\Node\SummaryNode $node
      * @param array $data
      */
-    public static function loadSummary(NodeLoader $loader, NodeInterface $node, array $data)
+    public static function loadSummary(NodeLoader $loader, SummaryNode $node, array $data)
     {
         self::loadScalarArrayData($node, $data);
     }
@@ -162,10 +185,10 @@ class OrderFactory extends AbstractDocumentFactory
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
-     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @param \SE\Component\OpenTrans\Node\HeaderNode $node
      * @param array $data
      */
-    public static function loadHeader(NodeLoader $loader, NodeInterface $node, array $data)
+    public static function loadHeader(NodeLoader $loader, HeaderNode $node, array $data)
     {
         self::loadScalarArrayData($node, $data, array('control_info', 'order_info'));
 
@@ -176,6 +199,39 @@ class OrderFactory extends AbstractDocumentFactory
         if(isset($data['order_info'])  === true) {
             self::loadOrderInfo($loader, $node->getOrderInfo(), $data['order_info']);
         }
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\DocumentNode $node
+     * @param array $data
+     */
+    public static function loadItems(NodeLoader $loader, DocumentNode $node, array $data)
+    {
+        foreach($data as $itemData) {
+            if(is_array($itemData) === true) {
+                $itemNode = $loader->getInstance(NodeLoader::NODE_ORDER_ITEM);
+                $node->addItem($itemNode);
+
+                self::buildItem($loader, $itemNode);
+                self::loadScalarArrayData($itemNode, $itemData, array('article_id', 'article_price'));
+
+                if(isset($itemData['article_id']) === true && is_array($itemData) === true) {
+                    self::loadScalarArrayData($itemNode->getArticleId(), $itemData['article_id']);
+                }
+
+                if(isset($itemData['article_price']) === true && is_array($itemData) === true) {
+                    self::loadScalarArrayData($itemNode->getArticlePrice(), $itemData['article_price']);
+                }
+
+                print_r($itemNode);
+            }
+        }
+
+
+
+        die();
     }
 
     /**
@@ -256,6 +312,4 @@ class OrderFactory extends AbstractDocumentFactory
             }
         }
     }
-
-
 }

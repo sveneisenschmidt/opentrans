@@ -41,22 +41,22 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\AddressNode();
 
-        $node->setName1($name1 = sha1(microtime(true)));
+        $node->setName1($name1 = sha1(uniqid(microtime(true))));
         $this->assertEquals($name1, $node->getName1());
 
-        $node->setName2($name2 = sha1(microtime(true)));
+        $node->setName2($name2 = sha1(uniqid(microtime(true))));
         $this->assertEquals($name2, $node->getName2());
 
-        $node->setName3($name3 = sha1(microtime(true)));
+        $node->setName3($name3 = sha1(uniqid(microtime(true))));
         $this->assertEquals($name3, $node->getName3());
 
-        $node->setEmail($email = sha1(microtime(true)));
+        $node->setEmail($email = sha1(uniqid(microtime(true))));
         $this->assertEquals($email, $node->getEmail());
 
-        $node->setCity($city = sha1(microtime(true)));
+        $node->setCity($city = sha1(uniqid(microtime(true))));
         $this->assertEquals($city, $node->getCity());
 
-        $node->setCountry($country = sha1(microtime(true)));
+        $node->setCountry($country = sha1(uniqid(microtime(true))));
         $this->assertEquals($country, $node->getCountry());
 
         $node->setChargeVat('Y');
@@ -71,7 +71,7 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
         $node->setPostCode($postCode = rand(10000,99999));
         $this->assertEquals($postCode, $node->getPostCode());
 
-        $node->setStreet($street = sha1(microtime(true)));
+        $node->setStreet($street = sha1(uniqid(microtime(true))));
         $this->assertEquals($street, $node->getStreet());
     }
 
@@ -83,9 +83,9 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\AddressNode();
         $name = implode(' ', array(
-            $name1 = sha1(microtime(true)),
-            $name2 = sha1(microtime(true)),
-            $name3 = sha1(microtime(true)),
+            $name1 = sha1(uniqid(microtime(true))),
+            $name2 = sha1(uniqid(microtime(true))),
+            $name3 = sha1(uniqid(microtime(true))),
         ));
 
         $node->setFullName($name);

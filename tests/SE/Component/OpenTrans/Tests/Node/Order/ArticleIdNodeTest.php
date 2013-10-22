@@ -41,13 +41,16 @@ class ArticleIdNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\ArticleIdNode();
 
-        $node->setId($id = sha1(microtime(true)));
+        $node->setId($id = sha1(uniqid(microtime(true))));
         $this->assertEquals($id, $node->getId());
 
-        $node->setName($name = sha1(microtime(true)));
+        $node->setName($name = sha1(uniqid(microtime(true))));
         $this->assertEquals($name, $node->getName());
 
-        $node->setNote($note = sha1(microtime(true)));
+        $node->setNote($note = sha1(uniqid(microtime(true))));
         $this->assertEquals($note, $node->getNote());
+
+        $node->setName($articleName = sha1(uniqid(microtime(true))));
+        $this->assertEquals($articleName, $node->getName());
     }
 }

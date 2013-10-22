@@ -41,7 +41,7 @@ class ControlInfoNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\ControlInfoNode();
 
-        $node->setGeneratorInfo($generatorInfo = sha1(microtime(true)));
+        $node->setGeneratorInfo($generatorInfo = sha1(uniqid(microtime(true))));
         $this->assertEquals($generatorInfo, $node->getGeneratorInfo());
 
         $date = new \DateTime(sprintf('@%s', rand(1, time())));

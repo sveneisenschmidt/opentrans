@@ -41,10 +41,10 @@ class PartyIdNode extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\PartyIdNode();
 
-        $node->setType($type = sha1(microtime(true)));
+        $node->setType($type = sha1(uniqid(microtime(true))));
         $this->assertEquals($type, $node->getType());
 
-        $node->setValue($value = sha1(microtime(true)));
+        $node->setValue($value = sha1(uniqid(microtime(true))));
         $this->assertEquals($value, $node->getValue());
 
     }

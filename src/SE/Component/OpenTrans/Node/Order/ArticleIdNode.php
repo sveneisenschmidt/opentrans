@@ -46,6 +46,16 @@ class ArticleIdNode extends AbstractNode
 
     /**
      *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("DESCRIPTION_SHORT")
+     * @Serializer\Type("string")
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     *
      * @param string $id
      */
     public function setId($id)

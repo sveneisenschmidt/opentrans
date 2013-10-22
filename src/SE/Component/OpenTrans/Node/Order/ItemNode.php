@@ -59,16 +59,6 @@ class ItemNode extends AbstractNode
     /**
      *
      * @Serializer\Expose
-     * @Serializer\SerializedName("DESCRIPTION_SHORT")
-     * @Serializer\Type("string")
-     *
-     * @var string
-     */
-    protected $articleName;
-
-    /**
-     *
-     * @Serializer\Expose
      * @Serializer\SerializedName("QUANTITY")
      * @Serializer\Type("float")
      *
@@ -128,24 +118,6 @@ class ItemNode extends AbstractNode
     public function getQuantity()
     {
         return $this->quantity;
-    }
-
-    /**
-     *
-     * @param string $articleName
-     */
-    public function setArticleName($articleName)
-    {
-        $this->articleName = $articleName;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getArticleName()
-    {
-        return $this->articleName;
     }
 
     /**

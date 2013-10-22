@@ -39,8 +39,8 @@ class RemarkNodeTest extends \PHPUnit_Framework_TestCase
     public function ConstructorArguments()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\RemarkNode(
-            $type = sha1(microtime(true)),
-            $value = sha1(microtime(true))
+            $type = sha1(uniqid(microtime(true))),
+            $value = sha1(uniqid(microtime(true)))
         );
 
         $this->assertEquals($type, $node->getType());
@@ -55,10 +55,10 @@ class RemarkNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\RemarkNode();
 
-        $node->setType($type = sha1(microtime(true)));
+        $node->setType($type = sha1(uniqid(microtime(true))));
         $this->assertEquals($type, $node->getType());
 
-        $node->setValue($value = sha1(microtime(true)));
+        $node->setValue($value = sha1(uniqid(microtime(true))));
         $this->assertEquals($value, $node->getValue());
     }
 }

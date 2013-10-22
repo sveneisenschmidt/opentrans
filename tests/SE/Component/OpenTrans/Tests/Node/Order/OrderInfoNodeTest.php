@@ -41,7 +41,7 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
 
-        $node->setCurrency($currency = sha1(microtime(true)));
+        $node->setCurrency($currency = sha1(uniqid(microtime(true))));
         $this->assertEquals($currency, $node->getCurrency());
 
         $node->setOrderId($orderId = rand(1,1000000));

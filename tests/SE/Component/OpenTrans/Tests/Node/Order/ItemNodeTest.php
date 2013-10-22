@@ -47,9 +47,6 @@ class ItemNodeTest extends \PHPUnit_Framework_TestCase
         $node->setQuantity($quantity = rand(10000,99999));
         $this->assertEquals($quantity, $node->getQuantity());
 
-        $node->setArticleName($articleName = sha1(microtime(true)));
-        $this->assertEquals($articleName, $node->getArticleName());
-
         $articleId = new \SE\Component\OpenTrans\Node\Order\ArticleIdNode();
         $node->setArticleId($articleId);
         $this->assertSame($articleId, $node->getArticleId());

@@ -41,7 +41,7 @@ class ArticlePriceNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\ArticlePriceNode();
 
-        $node->setType($type = sha1(microtime(true)));
+        $node->setType($type = sha1(uniqid(microtime(true))));
         $this->assertEquals($type, $node->getType());
 
         $node->setDiscountPercent($discountPercent = rand(1,100));
