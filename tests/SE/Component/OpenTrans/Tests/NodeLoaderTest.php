@@ -36,7 +36,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function Can_Be_Instantiated()
+    public function CanBeInstantiated()
     {
         $this->assertInstanceOf('SE\Component\OpenTrans\NodeLoader', $this->loader);
     }
@@ -45,7 +45,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function Default_Mapping_Is_Ensured()
+    public function DefaultMappingIsEnsured()
     {
         $map = array(
             $this->loader->get(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT)
@@ -60,7 +60,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function Default_Mapping_Returns_Default_Class()
+    public function DefaultMappingReturnsDefaultClass()
     {
         $instance = $this->loader->getInstance(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $instance);
@@ -70,7 +70,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function Custom_Mapping_Returns_Custom_Class()
+    public function CustomMappingReturnsCustomClass()
     {
        $class = '\SE\Component\OpenTrans\Tests\Fixtures\CustomOrderDocumentNodeFixture';
        $this->loader->set(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_DOCUMENT, $class);
@@ -86,7 +86,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \SE\Component\OpenTrans\Exception\UnknownNodeTypeException
      */
-    public function Get_Unknown_Node_Class()
+    public function GetUnknow_NodeClass()
     {
         $this->loader->get('unknown.node');
 
@@ -97,7 +97,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \SE\Component\OpenTrans\Exception\UnknownNodeTypeException
      */
-    public function Set_Unknown_Node_Class()
+    public function SetUnknownNodeClass()
     {
         $this->loader->set('unknown.node', '\SE\Component\OpenTrans\Node\ArticleNode');
     }
@@ -107,7 +107,7 @@ class NodeLoaderTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \SE\Component\OpenTrans\Exception\UnknownNodeException
      */
-    public function Get_Unknown_Node_Instance()
+    public function GetUnknown_NodeInstance()
     {
         $this->loader->getInstance('unknown.node');
     }

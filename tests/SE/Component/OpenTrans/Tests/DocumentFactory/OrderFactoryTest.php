@@ -25,9 +25,10 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     public function FactoryReturnsDocumentNode()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $object = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::create($loader);
+        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
+        $node  = $factory->create();
 
-        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $object);
+        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $node);
     }
 
     /**
@@ -37,8 +38,9 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     public function FactoryBuildsHeaderNode()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $object = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::create($loader);
-        $header = $object->getHeader();
+        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
+        $node  = $factory->create();
+        $header = $node->getHeader();
 
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\HeaderNode', $header);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\ControlInfoNode', $header->getControlInfo());
@@ -52,8 +54,9 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     public function FactoryBuildsOrderInfoNode()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $object = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::create($loader);
-        $header = $object->getHeader();
+        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
+        $node  = $factory->create();
+        $header = $node->getHeader();
         $orderInfo = $header->getOrderInfo();
 
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\OrderInfoNode', $orderInfo);
@@ -67,12 +70,27 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     public function FactoryBuildsPartyNode()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $object = $loader->getInstance(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_PARTY);
+        $node = $loader->getInstance(\SE\Component\OpenTrans\NodeLoader::NODE_ORDER_PARTY);
 
-        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::buildOrderParty($loader, $object);
+        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::buildOrderParty($loader, $node);
 
-        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\PartyIdNode', $object->getPartyId());
-        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\AddressNode', $object->getAddress());
+        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\PartyIdNode', $node->getPartyId());
+        $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\AddressNode', $node->getAddress());
+    }
+
+    /**
+     *
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function FactoryLoadWrongDocument()
+    {
+        $loader = new \SE\Component\OpenTrans\NodeLoader();
+        $stub = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\NodeInterface');
+        $data = array();
+
+        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
+        $factory->load($stub, $data);
     }
 
     /**
@@ -82,7 +100,8 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
     public function FactoryLoadData()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $object = \SE\Component\OpenTrans\DocumentFactory\OrderFactory::create($loader);
+        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
+        $object  = $factory->create();
 
         $data = array(
             'header' => array(
@@ -200,7 +219,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         );
 
         /* @var $object \SE\Component\OpenTrans\Node\Order\DocumentNode */
-        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::load($loader, $object, $data);
+        $factory->load($object, $data);
 
         $this->assertEquals($totalItemCount, $object->getSummary()->getTotalItemCount());
         $this->assertEquals(array('custom_entry_1' => $customEntry1), $object->getCustomEntries());
@@ -338,19 +357,5 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($articlePrice2, $articlePriceNode2->getFullPrice());
         $this->assertEquals(($articlePrice2 * $quantity2), $articlePriceNode2->getPriceAmount());
         $this->assertEquals($articleType2, $articlePriceNode2->getType());
-    }
-
-    /**
-     *
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function FactoryLoadWrongDocument()
-    {
-        $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $stub = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\NodeInterface');
-        $data = array();
-
-        \SE\Component\OpenTrans\DocumentFactory\OrderFactory::load($loader, $stub, $data);
     }
 }

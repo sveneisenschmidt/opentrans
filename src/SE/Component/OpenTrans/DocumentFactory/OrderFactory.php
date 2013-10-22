@@ -32,17 +32,32 @@ class OrderFactory extends AbstractDocumentFactory
 {
     /**
      *
+     * @var \SE\Component\OpenTrans\NodeLoader
+     */
+    protected $loader;
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     */
+    public function __construct(NodeLoader $loader)
+    {
+        $this->loader = $loader;
+    }
+
+    /**
+     *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param \SE\Component\OpenTrans\Node\Order\DocumentNode $node
      * @return \SE\Component\OpenTrans\Node\NodeInterface
      */
-    public static function create(NodeLoader $loader, $node = null)
+    public function create($node = null)
     {
         if($node === null || is_object($node) === false) {
-            $node = $loader->getInstance(NodeLoader::NODE_ORDER_DOCUMENT);
+            $node = $this->loader->getInstance(NodeLoader::NODE_ORDER_DOCUMENT);
         }
 
-        self::build($loader, $node);
+        self::build($this->loader, $node);
 
         return $node;
     }
@@ -143,7 +158,7 @@ class OrderFactory extends AbstractDocumentFactory
      * @param array $data
      * @param boolean $build
      */
-    public static function load(NodeLoader $loader, NodeInterface $node, array $data, $build = true)
+    public function load(NodeInterface $node, array $data, $build = true)
     {
         if($node instanceof DocumentNode === false) {
             throw new \InvalidArgumentException(sprintf(
@@ -153,21 +168,21 @@ class OrderFactory extends AbstractDocumentFactory
         }
 
         if($build === true) {
-            self::build($loader, $node);
+            self::build($this->loader, $node);
         }
 
         self::loadScalarArrayData($node, $data, array('summary', 'header', 'items'));
 
         if(isset($data['summary']) === true) {
-            self::loadSummary($loader, $node->getSummary(), $data['summary']);
+            self::loadSummary($this->loader, $node->getSummary(), $data['summary']);
         }
 
         if(isset($data['header']) === true) {
-            self::loadHeader($loader, $node->getHeader(), $data['header']);
+            self::loadHeader($this->loader, $node->getHeader(), $data['header']);
         }
 
         if(isset($data['items']) === true && is_array($data['items']) === true) {
-            self::loadItems($loader, $node, $data['items']);
+            self::loadItems($this->loader, $node, $data['items']);
         }
     }
 

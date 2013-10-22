@@ -15,7 +15,7 @@ namespace SE\Component\OpenTrans\Tests\DocumentFactory;
  * @package SE\Component\OpenTrans\Tests
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  */
-class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
+class DocumentFactoryResolverTest extends \PHPUnit_Framework_TestCase
 {
     /**
      *
@@ -24,8 +24,11 @@ class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
     public function ResolveValidDocumentDataFor_Order()
     {
         $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $factory = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, 'order');
-        $this->assertSame('\SE\Component\OpenTrans\DocumentFactory\OrderFactory', $factory);
+        $factoryClass = \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryResolver::resolveFactory($loader, 'order');
+        $factory = new $factoryClass($loader);
+
+
+        $this->assertInstanceOf('\SE\Component\OpenTrans\DocumentFactory\OrderFactory', $factory);
     }
     /**
      *

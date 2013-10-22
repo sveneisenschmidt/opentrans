@@ -11,8 +11,10 @@
 namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
+use \SE\Component\OpenTrans\DocumentType;
 use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
+
 /**
  *
  * @package SE\Component\OpenTrans
@@ -20,8 +22,12 @@ use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
  */
 class DocumentFactoryResolver
 {
+    /**
+     *
+     * @var array
+     */
     protected static $factories = array(
-        'order' => NodeLoader::FACTORY_ORDER
+        DocumentType::DOCUMENT_ORDER => NodeLoader::FACTORY_ORDER
     );
     
     /**

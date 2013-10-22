@@ -23,17 +23,21 @@ interface DocumentFactoryInterface
     /**
      *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
-     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
-     * @return \SE\Component\OpenTrans\Node\NodeInterface
-     */    
-    public static function create(NodeLoader $loader, $node = null);
+     */
+    public function __construct(NodeLoader $loader);
 
     /**
      *
-     * @param \SE\Component\OpenTrans\NodeLoader $loader
+     * @param \SE\Component\OpenTrans\Node\NodeInterface $node
+     * @return \SE\Component\OpenTrans\Node\NodeInterface
+     */    
+    public function create($node = null);
+
+    /**
+     *
      * @param \SE\Component\OpenTrans\Node\NodeInterface $document
      * @param array $data
      * @param boolean $build
      */
-    public static function load(NodeLoader $loader, NodeInterface $node, array $data, $build = true);
+    public function load(NodeInterface $node, array $data, $build = true);
 }
