@@ -76,6 +76,16 @@ class ArticleIdNode extends AbstractNode
 
     /**
      *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("MANUFACTURER_INFO")
+     * @Serializer\Type("string")
+     *
+     * @var string
+     */
+    protected $manufacturerInfo;
+
+    /**
+     *
      * @param string $buyerAid
      */
     public function setBuyerAid($buyerAid)
@@ -162,5 +172,23 @@ class ArticleIdNode extends AbstractNode
     public function getDescriptionLong()
     {
         return $this->descriptionLong;
+    }
+
+    /**
+     *
+     * @param string $manufacturerInfo
+     */
+    public function setManufacturerInfo($manufacturerInfo)
+    {
+        $this->manufacturerInfo = $manufacturerInfo;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getManufacturerInfo()
+    {
+        return $this->manufacturerInfo;
     }
 }

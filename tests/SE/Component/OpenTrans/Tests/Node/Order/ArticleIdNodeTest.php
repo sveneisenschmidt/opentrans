@@ -58,5 +58,8 @@ class ArticleIdNodeTest extends \PHPUnit_Framework_TestCase
 
         $node->setDescriptionLong($long = sha1(uniqid(microtime(true))));
         $this->assertEquals($long, $node->getDescriptionLong());
+
+        $node->setManufacturerInfo($info = sha1(uniqid(microtime(true))));
+        $this->assertEquals($info, $node->getManufacturerInfo());
     }
 }
