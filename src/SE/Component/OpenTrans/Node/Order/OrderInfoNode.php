@@ -59,8 +59,9 @@ class OrderInfoNode extends AbstractNode
      *
      * @Serializer\Expose
      * @Serializer\SerializedName("PAYMENT")
-     * @Serializer\Type("array")
+     * @Serializer\Type("array<array, array>")
      * @Serializer\XmlKeyValuePairs
+     * @Serializer\Accessor(getter="getNormalizedPayment")
      *
      * @var array
      */
@@ -191,6 +192,10 @@ class OrderInfoNode extends AbstractNode
      */
     public function setPayment($payment)
     {
+        if(is_string($payment) === true) {
+            $payment = array($payment => null);
+        }
+
         $this->payment = $payment;
     }
 
@@ -201,5 +206,14 @@ class OrderInfoNode extends AbstractNode
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getNormalizedPayment()
+    {
+        return $this->arrayChangeKeyCaseRecursive($this->payment, CASE_UPPER);
     }
 }

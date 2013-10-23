@@ -27,6 +27,7 @@ abstract class AbstractNode implements NodeInterface
      * @Serializer\Type("array")
      * @Serializer\XmlKeyValuePairs
      * @Serializer\XmlList(inline=true)
+     * @Serializer\Accessor(getter="getNormalizedCustomEntries")
      *
      * @var array
      */
@@ -67,5 +68,31 @@ abstract class AbstractNode implements NodeInterface
     public function getCustomEntries()
     {
         return $this->customEntries;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getNormalizedCustomEntries()
+    {
+        return $this->arrayChangeKeyCaseRecursive($this->customEntries, CASE_UPPER);
+    }
+
+    /**
+     *
+     * @param array $input
+     * @param integer $case
+     * @return array
+     */
+    public function arrayChangeKeyCaseRecursive(array $input, $case = CASE_LOWER)
+    {
+        $input = array_change_key_case($input, $case);
+        foreach($input as $key => $array){
+            if(is_array($array)){
+                $input[$key] = $this->arrayChangeKeyCaseRecursive($array, $case);
+            }
+        }
+        return $input;
     }
 }

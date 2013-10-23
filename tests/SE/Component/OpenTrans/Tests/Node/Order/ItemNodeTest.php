@@ -90,12 +90,11 @@ class ItemNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertTag(array('parent' => $parent, 'tag' => 'ARTICLE_PRICE'), $xml);
 
 
-        /* @var $actual \SE\Component\OpenTrans\Node\Order\ORDER_ITEM */
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\ItemNode */
         $actual = $serializer->deserialize($xml, get_class($node), 'xml');
         $this->assertEquals($articlePrice, $actual->getArticlePrice());
         $this->assertEquals($articleId, $actual->getArticleId());
         $this->assertEquals($quantity, $actual->getQuantity());
         $this->assertEquals($lindeId, $actual->getLineId());
-
     }
 }

@@ -63,15 +63,18 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
     public function SetAndGetPayment()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
-        $payment = array(
+
+        $this->assertEmpty($node->getPayment());
+        $node->setPayment($payment = array(
             'cash' => array(
                 'bank_account' => ($bankAccount = rand(100000,9999999))
             )
-        );
-
-        $this->assertEmpty($node->getPayment());
-        $node->setPayment($payment);
+        ));
         $this->assertEquals($payment, $node->getPayment());
+        $this->assertEquals(array('CASH' => array('BANK_ACCOUNT' => $bankAccount)), $node->getNormalizedPayment());
+
+        $node->setPayment('cash');
+        $this->assertEquals(array('cash' => null), $node->getPayment());
     }
 
     /**
@@ -92,5 +95,56 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $node->addRemark($remark2);
         $this->assertCount(3, $node->getRemarks());
         $this->assertSame(array($remark1, $remark2, $remark2), $node->getRemarks());
+    }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ORDER_INFO', 'content' => ''), $content);
+
+        $node->setCurrency($currency = sha1(uniqid(microtime(true))));
+        $node->setOrderId($orderId = rand(1,1000000));
+        $orderDate = new \DateTime(sprintf('@%s', rand(1, time())));
+        $node->setOrderDate($orderDate);
+        $orderParties = new \SE\Component\OpenTrans\Node\Order\OrderPartiesNode();
+        $orderParties->addCustomEntry('placeholder', time());
+        $node->setOrderParties($orderParties);
+
+        $node->setPayment($payment = array(
+            'cash' => array(
+                'bank_account' => ($bankAccount = rand(100000,9999999))
+            )
+        ));
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ORDER_INFO', 'children' => array( 'count' => 5)
+        ), $xml, $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_ID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_DATE'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'PRICE_CURRENCY'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_PARTIES'), $xml);
+        $this->assertTag($parent1 = array('parent' => $parent, 'tag' => 'PAYMENT'), $xml);
+        $this->assertTag($parent2 = array('parent' => $parent1, 'tag' => 'CASH'), $xml);
+        $this->assertTag(array('parent' => $parent2, 'tag' => 'BANK_ACCOUNT'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\OrderInfoNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertInstanceOf(get_class($orderParties), $actual->getOrderParties());
+        $this->assertEquals($orderDate, $actual->getOrderDate());
+        $this->assertEquals($orderId, $actual->getOrderId());
+        $this->assertEquals($currency, $actual->getCurrency());
+
+        $this->markTestSkipped('XmlKeyValuePairs can not be deserialized, see https://github.com/schmittjoh/serializer/issues/139 ');
+
+        $this->assertEmpty($actual->getPayment());
     }
 }
