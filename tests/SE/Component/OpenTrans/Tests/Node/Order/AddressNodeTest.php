@@ -11,6 +11,7 @@
 namespace SE\Component\OpenTrans\Tests\Node\Order;
 
 /**
+ * @group serialization
  *
  * @package SE\Component\OpenTrans\Tests
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
@@ -98,15 +99,13 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function SerializeTest()
+    public function SerializeAndDeserializeTest()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\AddressNode();
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
 
-        $this->assertEquals(
-            file_get_contents(__DIR__.'/Fixtures/address.xml'),
-            $serializer->serialize($node, 'xml')
-        );
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ADDRESS', 'content' => ''), $content);
 
         $node->setName1($name1 = sha1(uniqid(microtime(true))));
         $node->setName2($name2 = sha1(uniqid(microtime(true))));
@@ -114,27 +113,39 @@ class AddressNodeTest extends \PHPUnit_Framework_TestCase
         $node->setEmail($email = sha1(uniqid(microtime(true))));
         $node->setCity($city = sha1(uniqid(microtime(true))));
         $node->setCountry($country = sha1(uniqid(microtime(true))));
-        $node->setChargeVat('Y');
+        $node->setChargeVat($chargeVat = 'Y');
         $node->setPhone($phone = rand(10000,100000000));
         $node->setPostCode($postCode = rand(10000,99999));
         $node->setStreet($street = sha1(uniqid(microtime(true))));
 
-        $contents = str_replace(
-            array(
-                '%NAME1%', '%NAME2%', '%NAME3%', '%EMAIL%',
-                '%CITY%', '%COUNTRY%', '%PHONE%', '%ZIP%', '%STREET%',
-            ),
-            array(
-                $name1, $name2, $name3, $email,
-                $city,  $country, $phone, $postCode, $street
-            ),
-            file_get_contents(__DIR__.'/Fixtures/address_data.xml')
-        );
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ADDRESS', 'children' => array( 'count' => 10)
+        ), $xml);
 
-        $this->assertEquals(
-            $contents,
-            $serializer->serialize($node, 'xml')
-        );
+        $this->assertTag(array('parent' => $parent, 'tag' => 'NAME'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'NAME2'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'NAME3'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'CITY'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ZIP'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'STREET'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'COUNTRY'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'PHONE'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'EMAIL'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'CHARGE_VAT'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\AddressNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($name1, $actual->getName1());
+        $this->assertEquals($name2, $actual->getName2());
+        $this->assertEquals($name3, $actual->getName3());
+        $this->assertEquals($city, $actual->getCity());
+        $this->assertEquals($postCode, $actual->getPostCode());
+        $this->assertEquals($street, $actual->getStreet());
+        $this->assertEquals($country, $actual->getCountry());
+        $this->assertEquals($phone, $actual->getPhone());
+        $this->assertEquals($email, $actual->getEmail());
+        $this->assertEquals($chargeVat, $actual->getChargeVat());
     }
 
 

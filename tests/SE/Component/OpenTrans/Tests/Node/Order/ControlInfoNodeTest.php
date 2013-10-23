@@ -48,4 +48,34 @@ class ControlInfoNodeTest extends \PHPUnit_Framework_TestCase
         $node->setGenerationDate($date);
         $this->assertSame($date, $node->getGenerationDate());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\ControlInfoNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'CONTROL_INFO', 'content' => ''), $content);
+
+        $node->setGeneratorInfo($generatorInfo = sha1(uniqid(microtime(true))));
+        $date = new \DateTime(sprintf('@%s', rand(1, time())));
+        $node->setGenerationDate($date);
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'CONTROL_INFO', 'children' => array( 'count' => 2)
+        ), $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'GENERATOR_INFO'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'GENERATION_DATE'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\ControlInfoNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($generatorInfo, $actual->getGeneratorInfo());
+        $this->assertEquals($date, $actual->getGenerationDate());;
+    }
 }

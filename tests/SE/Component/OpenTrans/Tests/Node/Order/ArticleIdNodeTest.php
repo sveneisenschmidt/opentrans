@@ -62,4 +62,45 @@ class ArticleIdNodeTest extends \PHPUnit_Framework_TestCase
         $node->setManufacturerInfo($info = sha1(uniqid(microtime(true))));
         $this->assertEquals($info, $node->getManufacturerInfo());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\ArticleIdNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ARTICLE_ID', 'content' => ''), $content);
+
+        $node->setSupplierAid($supplierAid = sha1(uniqid(microtime(true))));
+        $node->setBuyerAid($buyerAid = sha1(uniqid(microtime(true))));
+        $node->setInternationalAid($internationalAid = sha1(uniqid(microtime(true))));
+        $node->setDescriptionShort($short = sha1(uniqid(microtime(true))));
+        $node->setDescriptionLong($long = sha1(uniqid(microtime(true))));
+        $node->setManufacturerInfo($info = sha1(uniqid(microtime(true))));
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ARTICLE_ID', 'children' => array( 'count' => 6)
+        ), $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'DESCRIPTION_SHORT'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'DESCRIPTION_LONG'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'SUPPLIER_AID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'BUYER_AID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'INTERNATIONAL_AID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'MANUFACTURER_INFO'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\ArticleIdNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($info, $actual->getManufacturerInfo());
+        $this->assertEquals($long, $actual->getDescriptionLong());
+        $this->assertEquals($short, $actual->getDescriptionShort());
+        $this->assertEquals($supplierAid, $actual->getSupplierAid());
+        $this->assertEquals($internationalAid, $actual->getInternationalAid());
+        $this->assertEquals($buyerAid, $actual->getBuyerAid());
+    }
 }
