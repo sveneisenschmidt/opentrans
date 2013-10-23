@@ -10,6 +10,8 @@
 
 namespace SE\Component\OpenTrans;
 
+use \Symfony\Component\EventDispatcher\EventDispatcher;
+
 use \JMS\Serializer\Serializer;
 use \JMS\Serializer\SerializerBuilder;
 
@@ -47,15 +49,20 @@ class DocumentBuilder
      *
      * @param \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface $factory
      * @param \JMS\Serializer\Serializer $serializer
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher
      */
-    public function __construct(DocumentFactoryInterface $factory, Serializer $serializer = null)
+    public function __construct(DocumentFactoryInterface $factory, Serializer $serializer = null, EventDispatcher $dispatcher = null)
     {
         if($serializer === null) {
-            $serializer = SerializerBuilder::create()->build();
+            $builder = SerializerBuilder::create()->build();
+        }
+        if($dispatcher === null) {
+            $dispatcher = new EventDispatcher();
         }
 
         $this->factory    = $factory;
         $this->serializer = $serializer;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -122,12 +129,32 @@ class DocumentBuilder
      * @throws \SE\Component\OpenTrans\Exception\MissingDocumentException
      * @return string
      */
-    public function toString()
+    public function serialize()
     {
         if($this->document === null) {
             throw new MissingDocumentException('No Document built. Please call ::build first.');
         }
 
-        return $this->serializer->serialize($this->document, 'xml');
+        $this->dispatcher->dispatch('document_builder.pre_serialize');
+        $result = $this->serializer->serialize($this->document, 'xml');
+        $this->dispatcher->dispatch('document_builder.post_serialize');
+
+        return $result;
+    }
+
+    /**
+     *
+     * @param string $xml
+     * @return \SE\Component\OpenTrans\Node\NodeInterface
+     */
+    public function deserialize($xml)
+    {
+        $node = $this->factory->createDocument();
+
+        $this->dispatcher->dispatch('document_builder.pre_deserialize');
+        $result = $this->serializer->deserialize($xml, get_class($node), 'xml');
+        $this->dispatcher->dispatch('document_builder.post_deserialize');
+
+        return $result;
     }
 }
