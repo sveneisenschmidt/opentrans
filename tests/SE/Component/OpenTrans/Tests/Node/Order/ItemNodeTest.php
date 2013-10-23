@@ -55,4 +55,47 @@ class ItemNodeTest extends \PHPUnit_Framework_TestCase
         $node->setArticlePrice($articlePrice);
         $this->assertSame($articlePrice, $node->getArticlePrice());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\ItemNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ORDER_ITEM', 'content' => ''), $content);
+
+        $node->setLineId($lindeId = rand(10000,99999));
+        $node->setQuantity($quantity = rand(10000,99999));
+
+        $articleId = new \SE\Component\OpenTrans\Node\Order\ArticleIdNode();
+        $articleId->setSupplierAid($supplierAid = rand(10000,99999));
+        $node->setArticleId($articleId);
+
+        $articlePrice = new \SE\Component\OpenTrans\Node\Order\ArticlePriceNode();
+        $articlePrice->setPriceAmount($priceAmount = rand(10000,99999));
+        $node->setArticlePrice($articlePrice);
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ORDER_ITEM', 'children' => array( 'count' => 4)
+        ), $xml, $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'LINE_ITEM_ID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ARTICLE_ID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'QUANTITY'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ARTICLE_PRICE'), $xml);
+
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\ORDER_ITEM */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($articlePrice, $actual->getArticlePrice());
+        $this->assertEquals($articleId, $actual->getArticleId());
+        $this->assertEquals($quantity, $actual->getQuantity());
+        $this->assertEquals($lindeId, $actual->getLineId());
+
+    }
 }

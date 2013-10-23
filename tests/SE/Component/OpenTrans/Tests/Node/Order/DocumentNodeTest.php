@@ -93,10 +93,10 @@ class DocumentNodeTest extends \PHPUnit_Framework_TestCase
         $node->setVersion($version = '1.'.rand(1,10));
         $node->setType($type = sha1(uniqid(microtime(true))));
         $header = new \SE\Component\OpenTrans\Node\Order\HeaderNode();
-        $header->addCustomEntry('placeholder', '1');
+        $header->addCustomEntry('placeholder', time());
         $node->setHeader($header);
         $summary = new \SE\Component\OpenTrans\Node\Order\SummaryNode();
-        $summary->addCustomEntry('placeholder', '2');
+        $summary->addCustomEntry('placeholder', time());
         $node->setSummary($summary);
 
         $item1 = new \SE\Component\OpenTrans\Node\Order\ItemNode();
