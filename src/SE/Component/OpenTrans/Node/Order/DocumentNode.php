@@ -30,6 +30,28 @@ class DocumentNode extends AbstractNode
     /**
      *
      * @Serializer\Expose
+     * @Serializer\SerializedName("version")
+     * @Serializer\Type("string")
+     * @Serializer\XmlAttribute
+     *
+     * @var string
+     */
+    protected $version = '1.0';
+
+    /**
+     *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("type")
+     * @Serializer\Type("string")
+     * @Serializer\XmlAttribute
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
+     *
+     * @Serializer\Expose
      * @Serializer\SerializedName("ORDER_HEADER")
      * @Serializer\Type("SE\Component\OpenTrans\Node\Order\HeaderNode")
      *
@@ -119,5 +141,41 @@ class DocumentNode extends AbstractNode
     public function getSummary()
     {
         return $this->summary;
+    }
+
+    /**
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 }

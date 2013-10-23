@@ -41,6 +41,12 @@ class DocumentNodeTest extends \PHPUnit_Framework_TestCase
     {
         $node = new \SE\Component\OpenTrans\Node\Order\DocumentNode();
 
+        $node->setVersion($version = '1.'.rand(1,10));
+        $this->assertEquals($version, $node->getVersion());
+
+        $node->setType($type = sha1(uniqid(microtime(true))));
+        $this->assertEquals($type, $node->getType());
+
         $header = new \SE\Component\OpenTrans\Node\Order\HeaderNode();
         $node->setHeader($header);
         $this->assertSame($header, $node->getHeader());
@@ -70,5 +76,51 @@ class DocumentNodeTest extends \PHPUnit_Framework_TestCase
         $node->addItem($item2);
         $this->assertCount(3, $node->getItems());
         $this->assertEquals($node->getItems(), array($item1, $item2, $item2));
+    }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\DocumentNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $content = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ORDER', 'content' => ''), $content);
+
+        $node->setVersion($version = '1.'.rand(1,10));
+        $node->setType($type = sha1(uniqid(microtime(true))));
+        $header = new \SE\Component\OpenTrans\Node\Order\HeaderNode();
+        $header->addCustomEntry('placeholder', '1');
+        $node->setHeader($header);
+        $summary = new \SE\Component\OpenTrans\Node\Order\SummaryNode();
+        $summary->addCustomEntry('placeholder', '2');
+        $node->setSummary($summary);
+
+        $item1 = new \SE\Component\OpenTrans\Node\Order\ItemNode();
+        $node->addItem($item1);
+
+        $item2 = new \SE\Component\OpenTrans\Node\Order\ItemNode();
+        $node->addItem($item2);
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ORDER', 'children' => array( 'count' => 3)
+        ), $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_HEADER'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_SUMMARY'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_ITEM_LIST'), $xml);
+        $this->assertTag(array('tag' => 'ORDER', 'attributes' => array('version' => $version)), $xml);
+        $this->assertTag(array('tag' => 'ORDER', 'attributes' => array('type' => $type)), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\DocumentNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertInstanceOf(get_class($summary), $actual->getSummary());
+        $this->assertInstanceOf(get_class($header), $actual->getHeader());
+        $this->assertEquals($type, $actual->getType());
+        $this->assertEquals($version, $actual->getVersion());
     }
 }

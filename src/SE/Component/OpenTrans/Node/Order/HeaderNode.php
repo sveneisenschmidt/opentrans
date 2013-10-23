@@ -57,7 +57,7 @@ class HeaderNode extends AbstractNode
 
     /**
      *
-     * @return\SE\Component\OpenTrans\Node\Order\ControlInfoNode
+     * @return \SE\Component\OpenTrans\Node\Order\ControlInfoNode
      */
     public function getControlInfo()
     {
