@@ -143,8 +143,7 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($orderId, $actual->getOrderId());
         $this->assertEquals($currency, $actual->getCurrency());
 
-        $this->markTestSkipped('XmlKeyValuePairs can not be deserialized, see https://github.com/schmittjoh/serializer/issues/139 ');
-
+        // XmlKeyValuePairs can not be deserialized, see https://github.com/schmittjoh/serializer/issues/139
         $this->assertEmpty($actual->getPayment());
     }
 }

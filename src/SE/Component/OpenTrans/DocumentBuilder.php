@@ -20,6 +20,9 @@ use \SE\Component\OpenTrans\Node\NodeInterface;
 use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\MissingDocumentException;
 
+use \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
+use \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber;
+
 /**
  *
  * @package SE\Component\OpenTrans
@@ -41,9 +44,15 @@ class DocumentBuilder
 
     /**
      *
-     * @var \SE\Component\OpenTrans\DocumentFactory\
+     * @var \SE\Component\OpenTrans\Node\NodeInterface
      */
     protected $document;
+
+    /**
+     *
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected $dispatcher;
 
     /**
      *
@@ -54,7 +63,7 @@ class DocumentBuilder
     public function __construct(DocumentFactoryInterface $factory, Serializer $serializer = null, EventDispatcher $dispatcher = null)
     {
         if($serializer === null) {
-            $builder = SerializerBuilder::create()->build();
+            $serializer = SerializerBuilder::create()->build();
         }
         if($dispatcher === null) {
             $dispatcher = new EventDispatcher();
@@ -63,6 +72,39 @@ class DocumentBuilder
         $this->factory    = $factory;
         $this->serializer = $serializer;
         $this->dispatcher = $dispatcher;
+
+        $this->addDefaultSubscribers();
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function addDefaultSubscribers()
+    {
+        foreach($this->getDefaultSubscribers() as $subscriber) {
+            $this->dispatcher->addSubscriber($subscriber);
+        }
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getDefaultSubscribers()
+    {
+        return array(
+            new OrderSubscriber()
+        );
+    }
+
+    /**
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    public function getDispatcher()
+    {
+        return $this->dispatcher;
     }
 
     /**
@@ -135,11 +177,11 @@ class DocumentBuilder
             throw new MissingDocumentException('No Document built. Please call ::build first.');
         }
 
-        $this->dispatcher->dispatch('document_builder.pre_serialize');
-        $result = $this->serializer->serialize($this->document, 'xml');
-        $this->dispatcher->dispatch('document_builder.post_serialize');
+        $this->dispatcher->dispatch('document_node.pre_serialize');
+        $xml = $this->serializer->serialize($this->document, 'xml');
+        $this->dispatcher->dispatch('document_node.post_serialize');
 
-        return $result;
+        return $xml;
     }
 
     /**
@@ -151,9 +193,13 @@ class DocumentBuilder
     {
         $node = $this->factory->createDocument();
 
-        $this->dispatcher->dispatch('document_builder.pre_deserialize');
+        $event = new DeserializeEvent();
+        $event->setData($xml);
+        $this->dispatcher->dispatch('document_node.pre_deserialize', $event);
+
         $result = $this->serializer->deserialize($xml, get_class($node), 'xml');
-        $this->dispatcher->dispatch('document_builder.post_deserialize');
+        $event->setDocument($result);
+        $this->dispatcher->dispatch('document_node.post_deserialize', $event);
 
         return $result;
     }

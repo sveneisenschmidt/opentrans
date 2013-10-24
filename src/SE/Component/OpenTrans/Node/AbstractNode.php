@@ -13,6 +13,7 @@ namespace SE\Component\OpenTrans\Node;
 use \JMS\Serializer\Annotation as Serializer;
 
 use \SE\Component\OpenTrans\Node\NodeInterface;
+use \SE\Component\OpenTrans\Util;
 
 /**
  *
@@ -76,23 +77,6 @@ abstract class AbstractNode implements NodeInterface
      */
     public function getNormalizedCustomEntries()
     {
-        return $this->arrayChangeKeyCaseRecursive($this->customEntries, CASE_UPPER);
-    }
-
-    /**
-     *
-     * @param array $input
-     * @param integer $case
-     * @return array
-     */
-    public function arrayChangeKeyCaseRecursive(array $input, $case = CASE_LOWER)
-    {
-        $input = array_change_key_case($input, $case);
-        foreach($input as $key => $array){
-            if(is_array($array)){
-                $input[$key] = $this->arrayChangeKeyCaseRecursive($array, $case);
-            }
-        }
-        return $input;
+        return Util::arrayChangeKeyCaseRecursive($this->customEntries, CASE_UPPER);
     }
 }
