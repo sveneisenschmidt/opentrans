@@ -55,34 +55,24 @@ class OrderSubscriber implements  EventSubscriberInterface
      */
     public function onPostDeserializePayment(DeserializeEvent $event)
     {
-        if(($document = $event->getDocument()) instanceof Order\DocumentNode === false) {
-            return;
-        } else
-        if(($header = $document->getHeader()) === null) {
-            return;
-        } else
-        if(($orderInfo = $header->getOrderInfo()) === null) {
-            return;
-        } else
-        if(is_scalar($xml = $event->getData()) === false) {
-            return;
-        }
-
-        $data = $this->encoder->decode($xml, 'xml');
-        if(isset($data['ORDER_HEADER']) === false) {
-            return;
-        } else
-        if(isset($data['ORDER_HEADER']['ORDER_INFO']) === false) {
-            return;
-        } else
-        if(isset($data['ORDER_HEADER']['ORDER_INFO']['PAYMENT']) === false) {
-            return;
-        }
-
-        $paymentData = $data['ORDER_HEADER']['ORDER_INFO']['PAYMENT'];
-        if(is_array($paymentData) === true && empty($paymentData) === false) {
-            $payment = Util::arrayChangeKeyCaseRecursive($paymentData, CASE_LOWER);
-            $orderInfo->setPayment($payment);
+        if( (($document     = $event->getDocument())    instanceof Order\DocumentNode   === true) &&
+            (($header       = $document->getHeader())   instanceof Order\HeaderNode     === true) &&
+            (($orderInfo    = $header->getOrderInfo())  instanceof Order\OrderInfoNode  === true)
+        ) {
+            $xml = $event->getData();
+            $data = Util::arrayChangeKeyCaseRecursive(
+                $this->encoder->decode($xml, 'xml'),
+                CASE_LOWER
+            );
+            if( (isset($data['order_header']) === true) &&
+                (isset($data['order_header']['order_info']) === true) &&
+                (isset($data['order_header']['order_info']['payment']) === true)
+            ) {
+                $payment = $data['order_header']['order_info']['payment'];
+                if(is_array($payment) === true && empty($payment) === false) {
+                    $orderInfo->setPayment($payment);
+                }
+            }
         }
     }
 
