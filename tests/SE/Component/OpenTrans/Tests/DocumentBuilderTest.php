@@ -126,5 +126,23 @@ class DocumentBuilderTest extends \PHPUnit_Framework_TestCase
         $builder->load($data);
     }
 
+    /**
+     *
+     * @test
+     * @expectedException \SE\Component\OpenTrans\Exception\MissingDocumentException
+     */
+    public function SerializeMissingDocument()
+    {
+        $data = array(
+            'test' => sha1(uniqid(microtime(true)))
+        );
+
+        $loader = $this->getMock('\SE\Component\OpenTrans\NodeLoader');
+        $factory = $this->getMockForAbstractClass('\SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface');
+
+        $builder = \SE\Component\OpenTrans\DocumentBuilder::create($factory);
+        $builder->serialize();
+    }
+
 
 }

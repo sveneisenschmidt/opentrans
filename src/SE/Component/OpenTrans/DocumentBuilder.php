@@ -20,6 +20,7 @@ use \SE\Component\OpenTrans\Node\NodeInterface;
 use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\MissingDocumentException;
 
+use \SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
 use \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
 use \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber;
 
@@ -177,9 +178,13 @@ class DocumentBuilder
             throw new MissingDocumentException('No Document built. Please call ::build first.');
         }
 
-        $this->dispatcher->dispatch('document_node.pre_serialize');
+        $event = new SerializeEvent();
+        $event->setDocument($this->document);
+        $this->dispatcher->dispatch('document_node.pre_serialize', $event);
+
         $xml = $this->serializer->serialize($this->document, 'xml');
-        $this->dispatcher->dispatch('document_node.post_serialize');
+        $event->setData($xml);
+        $this->dispatcher->dispatch('document_node.post_serialize', $event);
 
         return $xml;
     }

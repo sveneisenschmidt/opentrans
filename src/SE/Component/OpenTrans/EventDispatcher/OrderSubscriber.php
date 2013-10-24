@@ -55,9 +55,9 @@ class OrderSubscriber implements  EventSubscriberInterface
      */
     public function onPostDeserializePayment(DeserializeEvent $event)
     {
-        if( (($document     = $event->getDocument())    instanceof Order\DocumentNode   === true) &&
-            (($header       = $document->getHeader())   instanceof Order\HeaderNode     === true) &&
-            (($orderInfo    = $header->getOrderInfo())  instanceof Order\OrderInfoNode  === true)
+        if( (($document  = $event->getDocument())   instanceof Order\DocumentNode  === true) &&
+            (($header    = $document->getHeader())  instanceof Order\HeaderNode    === true) &&
+            (($orderInfo = $header->getOrderInfo()) instanceof Order\OrderInfoNode === true)
         ) {
             $xml = $event->getData();
             $data = Util::arrayChangeKeyCaseRecursive(
