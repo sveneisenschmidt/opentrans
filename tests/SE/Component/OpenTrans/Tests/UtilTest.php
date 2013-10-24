@@ -40,7 +40,6 @@ class UtilTest extends \PHPUnit_Framework_TestCase
             $data2
         );
 
-
         $data3 = \SE\Component\OpenTrans\Util::arrayChangeKeyCaseRecursive($data2);
         $this->assertEquals($data1, $data3);
     }

@@ -23,6 +23,14 @@ class DeserializeEventTest extends \PHPUnit_Framework_TestCase
      */
     public function SetterAndGetter()
     {
-        $this->markTestIncomplete('Test me!');
+        $event = new \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent();
+
+        $node = $this->getMockForAbstractClass('\SE\Component\OpenTrans\Node\NodeInterface');
+        $event->setDocument($node);
+        $this->assertSame($node, $event->getDocument());
+
+        $data = array(sha1(uniqid(microtime(true))), sha1(uniqid(microtime(true))), sha1(uniqid(microtime(true))));
+        $event->setData($data);
+        $this->assertEquals($data, $event->getData());
     }
 }
