@@ -24,19 +24,20 @@ class NodeLoader
     const FACTORY_ORDER                  = 'factory.order';
     
     // Node\Order
-    const NODE_ORDER_DOCUMENT       = 'node.order.document';
-    const NODE_ORDER_ADDRESS        = 'node.order.adress';
-    const NODE_ORDER_ARTICLEID      = 'node.order.articleid.';
-    const NODE_ORDER_ARTICLEPRICE   = 'node.order.articleprice';  
-    const NODE_ORDER_CONTROLINFO    = 'node.order.controlinfo';
-    const NODE_ORDER_HEADER         = 'node.order.header';
-    const NODE_ORDER_ITEM           = 'node.order.item';
-    const NODE_ORDER_ORDERINFO      = 'node.order.info';
-    const NODE_ORDER_PARTIES        = 'node.node.order.parties';
-    const NODE_ORDER_PARTY          = 'node.node.order.party';
-    const NODE_ORDER_PARTYID        = 'node.node.order.partyid';
-    const NODE_ORDER_REMARK         = 'node.order.remark';
-    const NODE_ORDER_SUMMARY        = 'node.order.sumary';
+    const NODE_ORDER_DOCUMENT        = 'node.order.document';
+    const NODE_ORDER_ADDRESS         = 'node.order.adress';
+    const NODE_ORDER_ARTICLEID       = 'node.order.articleid.';
+    const NODE_ORDER_ARTICLEPRICE    = 'node.order.articleprice';
+    const NODE_ORDER_CONTROLINFO     = 'node.order.controlinfo';
+    const NODE_ORDER_HEADER          = 'node.order.header';
+    const NODE_ORDER_ITEM            = 'node.order.item';
+    const NODE_ORDER_ORDERINFO       = 'node.order.info';
+    const NODE_ORDER_PARTIES         = 'node.node.order.parties';
+    const NODE_ORDER_PARTY           = 'node.node.order.party';
+    const NODE_ORDER_PARTYCOLLECTION = 'node.node.order.partycollection';
+    const NODE_ORDER_PARTYID         = 'node.node.order.partyid';
+    const NODE_ORDER_REMARK          = 'node.order.remark';
+    const NODE_ORDER_SUMMARY         = 'node.order.sumary';
 
     /**
      *
@@ -47,19 +48,20 @@ class NodeLoader
         self::FACTORY_ORDER         => '\SE\Component\OpenTrans\DocumentFactory\OrderFactory',
         
         // Node\Order
-        self::NODE_ORDER_DOCUMENT       => '\SE\Component\OpenTrans\Node\Order\DocumentNode',
-        self::NODE_ORDER_HEADER         => '\SE\Component\OpenTrans\Node\Order\HeaderNode',
-        self::NODE_ORDER_SUMMARY        => '\SE\Component\OpenTrans\Node\Order\SummaryNode',
-        self::NODE_ORDER_ADDRESS        => '\SE\Component\OpenTrans\Node\Order\AddressNode',
-        self::NODE_ORDER_ARTICLEID      => '\SE\Component\OpenTrans\Node\Order\ArticleIdNode',
-        self::NODE_ORDER_ARTICLEPRICE   => '\SE\Component\OpenTrans\Node\Order\ArticlePriceNode',
-        self::NODE_ORDER_CONTROLINFO    => '\SE\Component\OpenTrans\Node\Order\ControlInfoNode',
-        self::NODE_ORDER_ITEM           => '\SE\Component\OpenTrans\Node\Order\ItemNode',
-        self::NODE_ORDER_ORDERINFO      => '\SE\Component\OpenTrans\Node\Order\OrderInfoNode',
-        self::NODE_ORDER_PARTIES        => '\SE\Component\OpenTrans\Node\Order\OrderPartiesNode',
-        self::NODE_ORDER_PARTY          => '\SE\Component\OpenTrans\Node\Order\PartyNode',
-        self::NODE_ORDER_PARTYID        => '\SE\Component\OpenTrans\Node\Order\PartyIdNode',
-        self::NODE_ORDER_REMARK         => '\SE\Component\OpenTrans\Node\Order\RemarkNode',
+        self::NODE_ORDER_DOCUMENT        => '\SE\Component\OpenTrans\Node\Order\DocumentNode',
+        self::NODE_ORDER_HEADER          => '\SE\Component\OpenTrans\Node\Order\HeaderNode',
+        self::NODE_ORDER_SUMMARY         => '\SE\Component\OpenTrans\Node\Order\SummaryNode',
+        self::NODE_ORDER_ADDRESS         => '\SE\Component\OpenTrans\Node\Order\AddressNode',
+        self::NODE_ORDER_ARTICLEID       => '\SE\Component\OpenTrans\Node\Order\ArticleIdNode',
+        self::NODE_ORDER_ARTICLEPRICE    => '\SE\Component\OpenTrans\Node\Order\ArticlePriceNode',
+        self::NODE_ORDER_CONTROLINFO     => '\SE\Component\OpenTrans\Node\Order\ControlInfoNode',
+        self::NODE_ORDER_ITEM            => '\SE\Component\OpenTrans\Node\Order\ItemNode',
+        self::NODE_ORDER_ORDERINFO       => '\SE\Component\OpenTrans\Node\Order\OrderInfoNode',
+        self::NODE_ORDER_PARTIES         => '\SE\Component\OpenTrans\Node\Order\OrderPartiesNode',
+        self::NODE_ORDER_PARTY           => '\SE\Component\OpenTrans\Node\Order\PartyNode',
+        self::NODE_ORDER_PARTYID         => '\SE\Component\OpenTrans\Node\Order\PartyIdNode',
+        self::NODE_ORDER_PARTYCOLLECTION => '\SE\Component\OpenTrans\Node\Order\PartyCollectionNode',
+        self::NODE_ORDER_REMARK          => '\SE\Component\OpenTrans\Node\Order\RemarkNode',
     );
 
     /**

@@ -159,7 +159,6 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
                         ),
                         'shipping_parties' => array(
                             array(
-                                'is_delivery_party' => true,
                                 'party_id' => array(
                                     'type' => 'shipping_specific',
                                     'value' => ($shippingEmail = sha1(uniqid(microtime(true))))
@@ -248,7 +247,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($orderParties);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\OrderPartiesNode', $orderParties);
 
-        $buyerParties = $orderParties->getBuyerParties();
+        $buyerParties = $orderParties->getBuyerParties()->get();
         $this->assertCount(1, $buyerParties);
 
         /* @var $buyerParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -259,9 +258,8 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($buyerEmail, $buyerParty->getPartyId()->getValue());
         $this->assertEquals($buyerEmail, $buyerParty->getAddress()->getEmail());
         $this->assertEquals('buyer_specific', $buyerParty->getPartyId()->getType());
-        $this->assertFalse($buyerParty->getIsDeliveryParty());
 
-        $invoiceParties = $orderParties->getInvoiceParties();
+        $invoiceParties = $orderParties->getInvoiceParties()->get();
         $this->assertCount(1, $invoiceParties);
 
         /* @var $invoiceParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -272,9 +270,8 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($invoiceEmail, $invoiceParty->getPartyId()->getValue());
         $this->assertEquals($invoiceEmail, $invoiceParty->getAddress()->getEmail());
         $this->assertEquals('invoice_specific', $invoiceParty->getPartyId()->getType());
-        $this->assertFalse($invoiceParty->getIsDeliveryParty());
 
-        $supplierParties = $orderParties->getSupplierParties();
+        $supplierParties = $orderParties->getSupplierParties()->get();
         $this->assertCount(1, $supplierParties);
 
         /* @var $supplierParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -285,9 +282,8 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($supplierEmail, $supplierParty->getPartyId()->getValue());
         $this->assertEquals($supplierEmail, $supplierParty->getAddress()->getEmail());
         $this->assertEquals('supplier_specific', $supplierParty->getPartyId()->getType());
-        $this->assertFalse($supplierParty->getIsDeliveryParty());
 
-        $shippingParties = $orderParties->getShippingParties();
+        $shippingParties = $orderParties->getShippingParties()->get();
         $this->assertCount(1, $shippingParties);
 
         /* @var $shippingParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -298,7 +294,6 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($shippingEmail, $shippingParty->getPartyId()->getValue());
         $this->assertEquals($shippingEmail, $shippingParty->getAddress()->getEmail());
         $this->assertEquals('shipping_specific', $shippingParty->getPartyId()->getType());
-        $this->assertTrue($shippingParty->getIsDeliveryParty());
 
 
         $items = $object->getItems();

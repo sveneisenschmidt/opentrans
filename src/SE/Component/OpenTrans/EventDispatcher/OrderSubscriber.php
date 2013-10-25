@@ -14,6 +14,7 @@ use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use \SE\Component\OpenTrans\Util;
 use \SE\Component\OpenTrans\Node\Order;
+use \SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
 use \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
 
 
@@ -25,7 +26,6 @@ class OrderSubscriber implements  EventSubscriberInterface
         $this->encoder = new \Symfony\Component\Serializer\Encoder\XmlEncoder();
     }
 
-
     /**
      *
      * @return array
@@ -33,6 +33,9 @@ class OrderSubscriber implements  EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            'document_node.post_serialize' => array(
+                array('onPostSerialize', 1)
+            ),
             'document_node.post_deserialize' => array(
                 array('onPostDeserialize', 1),
                 array('onPostDeserializePayment', 10)
@@ -44,10 +47,13 @@ class OrderSubscriber implements  EventSubscriberInterface
      *
      * @param \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent $event
      */
-    public function onPostDeserialize(DeserializeEvent $event)
-    {
+    public function onPostSerialize(SerializeEvent $event){}
 
-    }
+    /**
+     *
+     * @param \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent $event
+     */
+    public function onPostDeserialize(DeserializeEvent $event){}
 
     /**
      *

@@ -186,7 +186,7 @@ class DocumentBuilder
         $event->setData($xml);
         $this->dispatcher->dispatch('document_node.post_serialize', $event);
 
-        return $xml;
+        return $event->getData();
     }
 
     /**

@@ -296,20 +296,20 @@ class OrderFactory extends AbstractDocumentFactory
      */
     public static function loadOrderParties(NodeLoader $loader, OrderPartiesNode $node, array $data)
     {
-        $setters = array(
-            'buyer_parties'     => 'addBuyerParty',
-            'invoice_parties'   => 'addInvoiceParty',
-            'shipping_parties'  => 'addShippingParty',
-            'supplier_parties'  => 'addSupplierParty',
+        $methods = array(
+            'buyer_parties'     => 'getBuyerParties',
+            'invoice_parties'   => 'getInvoiceParties',
+            'shipping_parties'  => 'getShippingParties',
+            'supplier_parties'  => 'getSupplierParties',
         );
-        $parties = array_keys($setters);
+        $parties = array_keys($methods);
 
         foreach($data as $name => $values) {
             if(in_array($name, $parties) === true && is_array($values) === true) {
-                $setter = $setters[$name];
+                $method = $methods[$name];
                 foreach($values as $partyData) {
                     $partyNode = $loader->getInstance(NodeLoader::NODE_ORDER_PARTY);
-                    call_user_func_array(array($node, $setter), array($partyNode));
+                    $node->$method()->add($partyNode);
 
                     self::buildOrderParty($loader, $partyNode);
                     self::loadScalarArrayData($partyNode, $partyData, array('party_id' ,'address'));

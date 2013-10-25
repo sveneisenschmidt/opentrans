@@ -123,44 +123,4 @@ class DocumentNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($type, $actual->getType());
         $this->assertEquals($version, $actual->getVersion());
     }
-
-
-
-    /**
-     *
-     * @test
-     */
-    public function OrderEventSubscriberTest()
-    {
-        $loader = new \SE\Component\OpenTrans\NodeLoader();
-        $factory = new \SE\Component\OpenTrans\DocumentFactory\OrderFactory($loader);
-        $dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
-        $builder = new \SE\Component\OpenTrans\DocumentBuilder($factory, null, $dispatcher);
-
-        $this->assertSame($dispatcher, $builder->getDispatcher());
-
-        $subscribers = $builder->getDefaultSubscribers();
-        $this->assertNotEmpty($subscribers);
-        $this->assertContains(new \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber(), $subscribers, '', false, false);
-
-        /* Test Payment Transformation */
-        $builder->build();
-        $node = $builder->getDocument();
-        $node->getHeader()->getOrderInfo()->setPayment($payment = array(
-            'cash' => array(
-                'bank_account' => time()
-            )
-        ));
-        $xml = $builder->serialize();
-
-        $this->assertTag($parent1 = array( 'tag' => 'ORDER'), $xml, $xml);
-        $this->assertTag($parent2 = array('parent' => $parent1, 'tag' => 'ORDER_HEADER'), $xml);
-        $this->assertTag($parent3 = array('parent' => $parent2, 'tag' => 'ORDER_INFO'), $xml);
-        $this->assertTag($parent4 = array('parent' => $parent3, 'tag' => 'PAYMENT'), $xml);
-        $this->assertTag($parent5 = array('parent' => $parent4, 'tag' => 'CASH'), $xml);
-        $this->assertTag($parent6 = array('parent' => $parent5, 'tag' => 'BANK_ACCOUNT'), $xml);
-
-        $actual = $builder->deserialize($xml);
-        $this->assertEquals($payment, $actual->getHeader()->getOrderInfo()->getPayment());
-    }
 }

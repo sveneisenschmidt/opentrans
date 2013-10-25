@@ -15,7 +15,7 @@ namespace SE\Component\OpenTrans\Tests\Node\Order;
  * @package SE\Component\OpenTrans\Tests
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  */
-class PartyIdNode extends \PHPUnit_Framework_TestCase
+class PartyIdNodeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      *

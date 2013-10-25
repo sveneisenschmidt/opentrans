@@ -13,6 +13,7 @@ namespace SE\Component\OpenTrans\Node\Order;
 use \JMS\Serializer\Annotation as Serializer;
 
 use \SE\Component\OpenTrans\Node\AbstractNode;
+use \SE\Component\OpenTrans\Node\Order\PartyCollectionNode;
 
 /**
  *
@@ -28,68 +29,61 @@ class OrderPartiesNode extends AbstractNode
      *
      * @Serializer\Expose
      * @Serializer\SerializedName("BUYER_PARTY")
-     * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\PartyNode>")
-     * @Serializer\XmlList(inline=false, entry="PARTY")
+     * @Serializer\Type("SE\Component\OpenTrans\Node\Order\PartyCollectionNode")
+     * @Serializer\XmlList(inline=false)
      *
      * @var array|\SE\Component\OpenTrans\Node\Order\PartyNode
      */
-    protected $buyerParties = array();
+    protected $buyerParties;
 
     /**
      *
      * @Serializer\Expose
      * @Serializer\SerializedName("SUPPLIER_PARTY")
-     * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\PartyNode>")
-     * @Serializer\XmlList(inline=false, entry="PARTY")
+     * @Serializer\Type("SE\Component\OpenTrans\Node\Order\PartyCollectionNode")
+     * @Serializer\XmlList(inline=false)
      *
      * @var array|\SE\Component\OpenTrans\Node\Order\PartyNode
      */
-    protected $supplierParties = array();
+    protected $supplierParties;
 
     /**
      *
      * @Serializer\Expose
      * @Serializer\SerializedName("INVOICE_PARTY")
-     * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\PartyNode>")
-     * @Serializer\XmlList(inline=false, entry="PARTY")
+     * @Serializer\Type("SE\Component\OpenTrans\Node\Order\PartyCollectionNode")
+     * @Serializer\XmlList(inline=false)
      *
      * @var array|\SE\Component\OpenTrans\Node\Order\PartyNode
      */
-    protected $invoiceParties = array();
+    protected $invoiceParties;
 
     /**
      *
      * @Serializer\Expose
      * @Serializer\SerializedName("SHIPMENT_PARTIES")
-     * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\PartyNode>")
-     * @Serializer\XmlList(inline=false, entry="PARTY")
+     * @Serializer\Type("SE\Component\OpenTrans\Node\Order\PartyCollectionNode")
+     * @Serializer\XmlList(inline=false)
      *
      * @var array|\SE\Component\OpenTrans\Node\Order\PartyNode
      */
-    protected $shippingParties = array();
+    protected $shippingParties;
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\PartyNode $buyerParties
+     * @return void
      */
-    public function setBuyerParties(array $buyerParties)
+    public function __construct()
     {
-        $this->buyerParties = $buyerParties;
+        $this->buyerParties     = new PartyCollectionNode();
+        $this->supplierParties  = new PartyCollectionNode();
+        $this->invoiceParties   = new PartyCollectionNode();
+        $this->shippingParties  = new PartyCollectionNode();
     }
 
     /**
      *
-     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $buyerParty
-     */
-    public function addBuyerParty(PartyNode $buyerParty)
-    {
-        $this->buyerParties []= $buyerParty;
-    }
-
-
-    /**
-     *
-     * @return array|\SE\Component\OpenTrans\Node\Order\PartyNode
+     * @return \SE\Component\OpenTrans\Node\Order\PartyCollectionNode
      */
     public function getBuyerParties()
     {
@@ -98,25 +92,7 @@ class OrderPartiesNode extends AbstractNode
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\PartyNode $invoiceParties
-     */
-    public function setInvoiceParties(array $invoiceParties)
-    {
-        $this->invoiceParties = $invoiceParties;
-    }
-
-    /**
-     *
-     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $invoiceParty
-     */
-    public function addInvoiceParty(PartyNode $invoiceParty)
-    {
-        $this->invoiceParties []= $invoiceParty;
-    }
-
-    /**
-     *
-     * @return array|\SE\Component\OpenTrans\Node\Order\PartyNode
+     * @return \SE\Component\OpenTrans\Node\Order\PartyCollectionNode
      */
     public function getInvoiceParties()
     {
@@ -125,25 +101,7 @@ class OrderPartiesNode extends AbstractNode
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\PartyNode $supplierParties
-     */
-    public function setSupplierParties(array $supplierParties)
-    {
-        $this->supplierParties = $supplierParties;
-    }
-
-    /**
-     *
-     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $supplierParty
-     */
-    public function addSupplierParty(PartyNode $supplierParty)
-    {
-        $this->supplierParties []= $supplierParty;
-    }
-
-    /**
-     *
-     * @return array|\SE\Component\OpenTrans\Node\Order\PartyNode
+     * @return \SE\Component\OpenTrans\Node\Order\PartyCollectionNode
      */
     public function getSupplierParties()
     {
@@ -152,30 +110,10 @@ class OrderPartiesNode extends AbstractNode
 
     /**
      *
-     * @param array|\SE\Component\OpenTrans\Node\Order\PartyNode $shippingParties
-     */
-    public function setShippingParties(array $shippingParties)
-    {
-        $this->shippingParties = $shippingParties;
-    }
-
-    /**
-     *
-     * @param \SE\Component\OpenTrans\Node\Order\PartyNode $shippingParty
-     */
-    public function addShippingParty(PartyNode $shippingParty)
-    {
-        $this->shippingParties []= $shippingParty;
-    }
-
-    /**
-     *
-     * @return array|\SE\Component\OpenTrans\Node\Order\PartyNode
+     * @return \SE\Component\OpenTrans\Node\Order\PartyCollectionNode
      */
     public function getShippingParties()
     {
         return $this->shippingParties;
     }
-
-
 }
