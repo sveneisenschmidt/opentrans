@@ -247,7 +247,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($orderParties);
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\OrderPartiesNode', $orderParties);
 
-        $buyerParties = $orderParties->getBuyerParties()->get();
+        $buyerParties = $orderParties->getBuyerParties();
         $this->assertCount(1, $buyerParties);
 
         /* @var $buyerParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -259,7 +259,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($buyerEmail, $buyerParty->getAddress()->getEmail());
         $this->assertEquals('buyer_specific', $buyerParty->getPartyId()->getType());
 
-        $invoiceParties = $orderParties->getInvoiceParties()->get();
+        $invoiceParties = $orderParties->getInvoiceParties();
         $this->assertCount(1, $invoiceParties);
 
         /* @var $invoiceParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -271,7 +271,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($invoiceEmail, $invoiceParty->getAddress()->getEmail());
         $this->assertEquals('invoice_specific', $invoiceParty->getPartyId()->getType());
 
-        $supplierParties = $orderParties->getSupplierParties()->get();
+        $supplierParties = $orderParties->getSupplierParties();
         $this->assertCount(1, $supplierParties);
 
         /* @var $supplierParty \SE\Component\OpenTrans\Node\Order\PartyNode */
@@ -283,7 +283,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($supplierEmail, $supplierParty->getAddress()->getEmail());
         $this->assertEquals('supplier_specific', $supplierParty->getPartyId()->getType());
 
-        $shippingParties = $orderParties->getShippingParties()->get();
+        $shippingParties = $orderParties->getShippingParties();
         $this->assertCount(1, $shippingParties);
 
         /* @var $shippingParty \SE\Component\OpenTrans\Node\Order\PartyNode */

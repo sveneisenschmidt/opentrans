@@ -44,14 +44,14 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
         $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
 
-        $this->assertEmpty($node->getBuyerParties()->get());
-        $node->getBuyerParties()->set(array($party1, $party2));
-        $this->assertCount(2, $node->getBuyerParties()->get());
-        $this->assertSame(array($party1, $party2), $node->getBuyerParties()->get());
+        $this->assertEmpty($node->getBuyerParties());
+        $node->setBuyerParties(array($party1, $party2));
+        $this->assertCount(2, $node->getBuyerParties());
+        $this->assertSame(array($party1, $party2), $node->getBuyerParties());
 
-        $node->getBuyerParties()->add($party2);
-        $this->assertCount(3, $node->getBuyerParties()->get());
-        $this->assertSame(array($party1, $party2, $party2), $node->getBuyerParties()->get());
+        $node->addBuyerParty($party2);
+        $this->assertCount(3, $node->getBuyerParties());
+        $this->assertSame(array($party1, $party2, $party2), $node->getBuyerParties());
     }
 
     /**
@@ -65,14 +65,14 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
         $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
 
-        $this->assertEmpty($node->getShippingParties()->get());
-        $node->getShippingParties()->set(array($party1, $party2));
-        $this->assertCount(2, $node->getShippingParties()->get());
-        $this->assertSame(array($party1, $party2), $node->getShippingParties()->get());
+        $this->assertEmpty($node->getShippingParties());
+        $node->setShippingParties(array($party1, $party2));
+        $this->assertCount(2, $node->getShippingParties());
+        $this->assertSame(array($party1, $party2), $node->getShippingParties());
 
-        $node->getShippingParties()->add($party2);
-        $this->assertCount(3, $node->getShippingParties()->get());
-        $this->assertSame(array($party1, $party2, $party2), $node->getShippingParties()->get());
+        $node->addShippingParty($party2);
+        $this->assertCount(3, $node->getShippingParties());
+        $this->assertSame(array($party1, $party2, $party2), $node->getShippingParties());
     }
 
     /**
@@ -86,14 +86,14 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
         $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
 
-        $this->assertEmpty($node->getInvoiceParties()->get());
-        $node->getInvoiceParties()->set(array($party1, $party2));
-        $this->assertCount(2, $node->getInvoiceParties()->get());
-        $this->assertSame(array($party1, $party2), $node->getInvoiceParties()->get());
+        $this->assertEmpty($node->getInvoiceParties());
+        $node->setInvoiceParties(array($party1, $party2));
+        $this->assertCount(2, $node->getInvoiceParties());
+        $this->assertSame(array($party1, $party2), $node->getInvoiceParties());
 
-        $node->getInvoiceParties()->add($party2);
-        $this->assertCount(3, $node->getInvoiceParties()->get());
-        $this->assertSame(array($party1, $party2, $party2), $node->getInvoiceParties()->get());
+        $node->addInvoiceParty($party2);
+        $this->assertCount(3, $node->getInvoiceParties());
+        $this->assertSame(array($party1, $party2, $party2), $node->getInvoiceParties());
     }
 
     /**
@@ -107,14 +107,14 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
         $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
 
-        $this->assertEmpty($node->getSupplierParties()->get());
-        $node->getSupplierParties()->set(array($party1, $party2));
-        $this->assertCount(2, $node->getSupplierParties()->get());
-        $this->assertSame(array($party1, $party2), $node->getSupplierParties()->get());
+        $this->assertEmpty($node->getSupplierParties());
+        $node->setSupplierParties(array($party1, $party2));
+        $this->assertCount(2, $node->getSupplierParties());
+        $this->assertSame(array($party1, $party2), $node->getSupplierParties());
 
-        $node->getSupplierParties()->add($party2);
-        $this->assertCount(3, $node->getSupplierParties()->get());
-        $this->assertSame(array($party1, $party2, $party2), $node->getSupplierParties()->get());
+        $node->addSupplierParty($party2);
+        $this->assertCount(3, $node->getSupplierParties());
+        $this->assertSame(array($party1, $party2, $party2), $node->getSupplierParties());
     }
 
     /**
@@ -133,22 +133,22 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         ), $xml, $xml);
 
         $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getBuyerParties()->add($party1);
+        $node->addBuyerParty($party1);
 
         $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getInvoiceParties()->add($party2);
+        $node->addInvoiceParty($party2);
 
         $party3 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getSupplierParties()->add($party3);
+        $node->addSupplierParty($party3);
 
         $party4 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getShippingParties()->add($party4);
+        $node->addShippingParty($party4);
 
         $party5 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getShippingParties()->add($party5, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY);
+        $node->addShippingParty($party5, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY);
 
         $party6 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->getShippingParties()->add($party4, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY);
+        $node->addShippingParty($party4, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY);
 
         $xml = $serializer->serialize($node, 'xml');
         $this->assertTag($parent = array(
@@ -170,22 +170,22 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
 
         /* @var $actual \SE\Component\OpenTrans\Node\Order\OrderPartiesNode */
         $actual = $serializer->deserialize($xml, get_class($node), 'xml');
-        $this->assertEquals(array($party1), $actual->getBuyerParties()->get());
-        $this->assertEquals(array($party2), $actual->getInvoiceParties()->get());
-        $this->assertEquals(array($party3), $actual->getSupplierParties()->get());
-        $this->assertEquals(array($party4), $actual->getShippingParties()->get());
+        $this->assertEquals(array($party1), $actual->getBuyerParties());
+        $this->assertEquals(array($party2), $actual->getInvoiceParties());
+        $this->assertEquals(array($party3), $actual->getSupplierParties());
+        $this->assertEquals(array($party4), $actual->getShippingParties());
 
         $this->assertEquals(
             array($party5),
-            $actual->getShippingParties()->get(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY)
+            $actual->getShippingParties(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY)
         );
 
         $this->assertEquals(
             array($party6),
-            $actual->getShippingParties()->get(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY)
+            $actual->getShippingParties(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY)
         );
 
         // expected exception
-        $actual->getShippingParties()->get($type = sha1(uniqid(microtime(true))));
+        $actual->getShippingParties($type = sha1(uniqid(microtime(true))));
     }
 }

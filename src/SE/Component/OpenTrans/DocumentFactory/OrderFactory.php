@@ -297,10 +297,10 @@ class OrderFactory extends AbstractDocumentFactory
     public static function loadOrderParties(NodeLoader $loader, OrderPartiesNode $node, array $data)
     {
         $methods = array(
-            'buyer_parties'     => 'getBuyerParties',
-            'invoice_parties'   => 'getInvoiceParties',
-            'shipping_parties'  => 'getShippingParties',
-            'supplier_parties'  => 'getSupplierParties',
+            'buyer_parties'     => 'addBuyerParty',
+            'invoice_parties'   => 'addInvoiceParty',
+            'shipping_parties'  => 'addShippingParty',
+            'supplier_parties'  => 'addSupplierParty',
         );
         $parties = array_keys($methods);
 
@@ -309,7 +309,7 @@ class OrderFactory extends AbstractDocumentFactory
                 $method = $methods[$name];
                 foreach($values as $partyData) {
                     $partyNode = $loader->getInstance(NodeLoader::NODE_ORDER_PARTY);
-                    $node->$method()->add($partyNode);
+                    $node->$method($partyNode);
 
                     self::buildOrderParty($loader, $partyNode);
                     self::loadScalarArrayData($partyNode, $partyData, array('party_id' ,'address'));
