@@ -61,4 +61,29 @@ class RemarkNodeTest extends \PHPUnit_Framework_TestCase
         $node->setValue($value = sha1(uniqid(microtime(true))));
         $this->assertEquals($value, $node->getValue());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\RemarkNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'REMARK'), $xml);
+
+        $node->setType($type = sha1(uniqid(microtime(true))));
+        $node->setValue($value = sha1(uniqid(microtime(true))));
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array('tag' => 'REMARK', 'attributes' => array('type' => $type)
+        ), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\RemarkNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($type, $actual->getType());
+        $this->assertEquals($value, $actual->getValue());
+    }
 }

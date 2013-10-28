@@ -44,4 +44,27 @@ class SummaryNodeTest extends \PHPUnit_Framework_TestCase
         $node->setTotalItemCount($totalItemCount = rand(10,100));
         $this->assertEquals($totalItemCount, $node->getTotalItemCount());
     }
+
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\SummaryNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'ORDER_SUMMARY'), $xml, $xml);
+
+        $node->setTotalItemCount($totalItemCount = rand(10,100));
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array('tag' => 'ORDER_SUMMARY'), $xml, $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'TOTAL_ITEM_NUM'), $xml, $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\SummaryNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($totalItemCount, $actual->getTotalItemCount());
+    }
 }
