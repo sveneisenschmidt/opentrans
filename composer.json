@@ -1,7 +1,7 @@
 {
     "name": "se/opentrans",
     "type": "library",
-    "description": "Allows to read, create and write OpenTRANS comptaible documents",
+    "description": "Allows to read, create and write OpenTRANS compatible documents",
     "keywords": ["opentrans", "document", "serialization", "xml"],
     "homepage": "https://github.com/sveneisenschmidt/opentrans",
     "license": "MIT", 

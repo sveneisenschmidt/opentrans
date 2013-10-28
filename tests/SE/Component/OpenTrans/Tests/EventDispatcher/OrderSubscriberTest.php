@@ -45,6 +45,7 @@ class OrderSubscriberTest extends \PHPUnit_Framework_TestCase
             'CASH' => array('BANK_ACCOUNT' => $account)
         ), $info->getPayment());
     }
+
     /**
      *
      * @test
