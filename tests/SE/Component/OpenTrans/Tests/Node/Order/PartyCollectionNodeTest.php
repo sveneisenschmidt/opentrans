@@ -66,4 +66,67 @@ class PartyCollectionNodeTest extends \PHPUnit_Framework_TestCase
         $node = new \SE\Component\OpenTrans\Node\Order\PartyCollectionNode();
         $node->add(new \SE\Component\OpenTrans\Node\Order\PartyNode(), $hash = sha1(uniqid(microtime(true))));
     }
+
+    /**
+     *
+     * @test
+     * @expectedException \SE\Component\OpenTrans\Exception\UnknownPartyTypeException
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\PartyCollectionNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $xml = $serializer->serialize($node, 'xml');
+
+        $this->assertTag(array(
+            'tag' => 'ORDER_PARTIES', 'content' => ''
+        ), $xml, $xml);
+        $party1 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party1);
+
+        $party2 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party2);
+
+        $party3 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party3);
+
+        $party4 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party4);
+
+        $party5 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party5, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY);
+
+        $party6 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $node->add($party6, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY);
+
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'ORDER_PARTIES', 'children' => array('count' => 6)
+        ), $xml, $xml);
+
+        $this->assertTag($parent1 = array('parent' => $parent, 'tag' => 'DELIVERY_PARTY'), $xml);
+        $this->assertTag(array('parent' => $parent1, 'tag' => 'PARTY'), $xml);
+
+        $this->assertTag($parent2 = array('parent' => $parent, 'tag' => 'FINAL_DELIVERY_PARTY'), $xml);
+        $this->assertTag(array('parent' => $parent2, 'tag' => 'PARTY'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\PartyCollectionNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals(array($party1, $party2, $party3, $party4), $actual->get());
+
+        $this->assertEquals(
+            array($party5),
+            $actual->get(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY)
+        );
+
+        $this->assertEquals(
+            array($party6),
+            $actual->get(\SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY)
+        );
+
+        // expected exception
+        $actual->get($type = sha1(uniqid(microtime(true))));
+    }
 }

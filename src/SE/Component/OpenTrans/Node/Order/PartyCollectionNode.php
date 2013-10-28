@@ -21,6 +21,7 @@ use \SE\Component\OpenTrans\Exception\UnknownPartyTypeException;
  * @package SE\Component\OpenTrans
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  *
+ * @Serializer\XmlRoot("ORDER_PARTIES")
  * @Serializer\ExclusionPolicy("all")
  */
 class PartyCollectionNode extends AbstractNode

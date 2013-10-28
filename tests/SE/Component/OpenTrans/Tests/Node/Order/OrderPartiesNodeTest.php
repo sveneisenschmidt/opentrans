@@ -148,7 +148,7 @@ class OrderPartiesNode extends \PHPUnit_Framework_TestCase
         $node->addShippingParty($party5, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_FINAL_DELIVERY);
 
         $party6 = new \SE\Component\OpenTrans\Node\Order\PartyNode();
-        $node->addShippingParty($party4, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY);
+        $node->addShippingParty($party6, \SE\Component\OpenTrans\Node\Order\PartyCollectionNode::TYPE_DELIVERY);
 
         $xml = $serializer->serialize($node, 'xml');
         $this->assertTag($parent = array(
