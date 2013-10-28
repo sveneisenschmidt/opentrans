@@ -71,7 +71,6 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
             )
         ));
         $this->assertEquals($payment, $node->getPayment());
-        $this->assertEquals(array('CASH' => array('BANK_ACCOUNT' => $bankAccount)), $node->getNormalizedPayment());
 
         $node->setPayment('cash');
         $this->assertEquals(array('cash' => null), $node->getPayment());

@@ -21,8 +21,56 @@ class OrderSubscriberTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function SetterAndGetter()
+    public function OnPreSerializePayment()
     {
-        $this->markTestIncomplete('Test me!');
+        $event = new \SE\Component\OpenTrans\EventDispatcher\SerializeEvent();
+        $subscriber = new \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber();
+
+        $document = new \SE\Component\OpenTrans\Node\Order\DocumentNode();
+        $header = new \SE\Component\OpenTrans\Node\Order\HeaderNode();
+        $info = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
+
+        $payment = array('cash' => array(
+            'bank_account' => ($account = rand(1,time()))
+        ));
+
+        $document->setHeader($header);
+        $header->setOrderInfo($info);
+        $info->setPayment($payment);
+
+        $event->setDocument($document);
+        $subscriber->onPreSerializePayment($event);
+
+        $this->assertEquals(array(
+            'CASH' => array('BANK_ACCOUNT' => $account)
+        ), $info->getPayment());
+    }
+    /**
+     *
+     * @test
+     */
+    public function OnPostSerializePayment()
+    {
+        $event = new \SE\Component\OpenTrans\EventDispatcher\SerializeEvent();
+        $subscriber = new \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber();
+
+        $document = new \SE\Component\OpenTrans\Node\Order\DocumentNode();
+        $header = new \SE\Component\OpenTrans\Node\Order\HeaderNode();
+        $info = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
+
+        $payment = array('CASH' => array(
+            'BANK_ACCOUNT' => ($account = rand(1,time()))
+        ));
+
+        $document->setHeader($header);
+        $header->setOrderInfo($info);
+        $info->setPayment($payment);
+
+        $event->setDocument($document);
+        $subscriber->onPostSerializePayment($event);
+
+        $this->assertEquals(array(
+            'cash' => array('bank_account' => $account)
+        ), $info->getPayment());
     }
 }
