@@ -73,7 +73,7 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($payment, $node->getPayment());
 
         $node->setPayment('cash');
-        $this->assertEquals(array('cash' => null), $node->getPayment());
+        $this->assertEquals(array('cash' => array()), $node->getPayment());
     }
 
     /**
