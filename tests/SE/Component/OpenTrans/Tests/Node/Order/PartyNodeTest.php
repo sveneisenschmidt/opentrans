@@ -48,8 +48,39 @@ class PartyNodeTest extends \PHPUnit_Framework_TestCase
         $partyId = new \SE\Component\OpenTrans\Node\Order\PartyIdNode();
         $node->setPartyId($partyId);
         $this->assertSame($partyId, $node->getPartyId());
+    }
 
-        $node->setIsDeliveryParty($isDeliveryParty = (bool)rand(0,1));
-        $this->assertEquals($isDeliveryParty, $node->getIsDeliveryParty());
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\PartyNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'PARTY'), $xml);
+
+        $partyId = new \SE\Component\OpenTrans\Node\Order\PartyIdNode();
+        $partyId->setValue($id = rand(0,time()));
+        $node->setPartyId($partyId);
+
+        $address = new \SE\Component\OpenTrans\Node\Order\AddressNode();
+        $address->setName1($name = sha1(uniqid(microtime(true))));
+        $node->setAddress($address);
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'PARTY',
+        ), $xml);
+
+        $this->assertTag(array('parent' => $parent, 'tag' => 'PARTY_ID'), $xml);
+        $this->assertTag(array('parent' => $parent, 'tag' => 'ADDRESS'), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\PartyNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($partyId, $actual->getPartyId());
+        $this->assertEquals($address, $actual->getAddress());
     }
 }

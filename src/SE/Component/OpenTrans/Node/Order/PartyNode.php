@@ -46,13 +46,6 @@ class PartyNode extends AbstractNode
      */
     protected $address;
 
-
-    /**
-     *
-     * @var boolean
-     */
-    protected $isDeliveryParty = false;
-
     /**
      *
      * @param \SE\Component\OpenTrans\Node\Order\PartyIdNode $partyId
@@ -87,23 +80,5 @@ class PartyNode extends AbstractNode
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     *
-     * @param boolean $isDeliveryParty
-     */
-    public function setIsDeliveryParty($isDeliveryParty)
-    {
-        $this->isDeliveryParty = $isDeliveryParty;
-    }
-
-    /**
-     *
-     * @return boolean
-     */
-    public function getIsDeliveryParty()
-    {
-        return $this->isDeliveryParty;
     }
 }
