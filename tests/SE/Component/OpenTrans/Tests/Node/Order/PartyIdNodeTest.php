@@ -46,6 +46,33 @@ class PartyIdNodeTest extends \PHPUnit_Framework_TestCase
 
         $node->setValue($value = sha1(uniqid(microtime(true))));
         $this->assertEquals($value, $node->getValue());
+    }
 
+    /**
+     *
+     * @test
+     */
+    public function SerializeAndDeserializeTest()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\PartyIdNode();
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag(array('tag' => 'PARTY_ID'), $xml);
+
+        $node->setType($type = sha1(uniqid(microtime(true))));
+        $node->setValue($value =  sha1(uniqid(microtime(true))));
+
+        $xml = $serializer->serialize($node, 'xml');
+        $this->assertTag($parent = array(
+            'tag' => 'PARTY_ID',
+        ), $xml);
+
+        $this->assertTag(array('tag' => 'PARTY_ID', 'attributes' => array('type' => $type)), $xml);
+
+        /* @var $actual \SE\Component\OpenTrans\Node\Order\PartyIdNode */
+        $actual = $serializer->deserialize($xml, get_class($node), 'xml');
+        $this->assertEquals($type, $actual->getType());
+        $this->assertEquals($value, $actual->getValue());
     }
 }

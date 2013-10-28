@@ -19,7 +19,7 @@ use \SE\Component\OpenTrans\Node\AbstractNode;
  * @package SE\Component\OpenTrans
  * @author Sven Eisenschmidt <sven.eisenschmidt@gmail.com>
  *
- * @Serializer\XmlRoot("PARTY")
+ * @Serializer\XmlRoot("PARTY_ID")
  * @Serializer\ExclusionPolicy("all")
  */
 class PartyIdNode extends AbstractNode
