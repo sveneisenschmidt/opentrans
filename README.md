@@ -17,6 +17,10 @@ Allows you to read, create and write OpenTRANS compatible documents from PHP
 
 [Usage](#usage)
 
+* [Build document](#builder)
+* [Document factory](#factory)
+* [Run tests](#tests)
+
 [Roadmap](#roadmap)
 
 <a name="installation"></a>
@@ -36,6 +40,7 @@ The recommended way to install is through [Composer](http://getcomposer.org).
 
 ## Usage
 
+<a name="builder"></a>
 ### Build document
 
 Assuming you already have a builder (See [document factory](#factory))
@@ -124,8 +129,14 @@ $document = $builder->getDocument();
 
 ```
 
+<a name="tests"></a>
+### Run tests
+``` bash
+$> vendor/bin/phpunit
+```
+
 <a name="roadmap"></a>
-### Roadmap
+## Roadmap
 
 * Implement Document types
     * (x) Order
