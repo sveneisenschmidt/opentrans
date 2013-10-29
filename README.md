@@ -1,4 +1,4 @@
-opentrans
+OpenTrans
 =========
 
 [![Latest Stable Version](https://poser.pugx.org/se/opentrans/v/stable.png)](https://packagist.org/packages/se/opentrans)
@@ -20,6 +20,7 @@ Allows you to read, create and write OpenTRANS compatible documents from PHP
 * [Build document](#builder)
 * [Document factory](#factory)
 * [Run tests](#tests)
+* [Symfony2 integration](#bundle)
 
 [Roadmap](#roadmap)
 
@@ -134,6 +135,12 @@ $document = $builder->getDocument();
 ``` bash
 $> vendor/bin/phpunit
 ```
+
+<a name="bundle"></a>
+### Symfony2 bundle
+
+This library is integrated into Symfony2 through the [OpenTransBundle](https://github.com/sveneisenschmidt/opentrans-bundle).
+
 
 <a name="roadmap"></a>
 ## Roadmap
