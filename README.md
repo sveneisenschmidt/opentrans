@@ -1,9 +1,9 @@
-opentrans
+OpenTrans
 =========
 
 [![Latest Stable Version](https://poser.pugx.org/se/opentrans/v/stable.png)](https://packagist.org/packages/se/opentrans)
 
-Allows to read, create and write OpenTRANS compatible documents from PHP
+Allows you to read, create and write OpenTRANS compatible documents from PHP
 
 
 #### Dev branch is master branch.
@@ -17,10 +17,14 @@ Allows to read, create and write OpenTRANS compatible documents from PHP
 
 [Usage](#usage)
 
+* [Build document](#builder)
+* [Document factory](#factory)
+* [Run tests](#tests)
+* [Symfony2 integration](#bundle)
+
 [Roadmap](#roadmap)
 
-
-<a name="installation"/>
+<a name="installation"></a>
 ## Installation
 
 The recommended way to install is through [Composer](http://getcomposer.org).
@@ -33,13 +37,14 @@ The recommended way to install is through [Composer](http://getcomposer.org).
 }
 ```
 
-<a name="usage"/>
+<a name="usage"></a>
 
 ## Usage
 
+<a name="builder"></a>
 ### Build document
 
-Assumed you already obtained a builder (See [document factory](#factory) )
+Assuming you already have a builder (See [document factory](#factory))
 
 ``` php
 <?php
@@ -82,7 +87,7 @@ Returns:
 ```
 
 
-<a name="factory"/>
+<a name="factory"></a>
 ### Document factory
 
 ``` php
@@ -125,8 +130,20 @@ $document = $builder->getDocument();
 
 ```
 
-<a name="roadmap"/>
-### Roadmap
+<a name="tests"></a>
+### Run tests
+``` bash
+$> vendor/bin/phpunit
+```
+
+<a name="bundle"></a>
+### Symfony2 bundle
+
+This library is integrated into Symfony2 through the [OpenTransBundle](https://github.com/sveneisenschmidt/opentrans-bundle).
+
+
+<a name="roadmap"></a>
+## Roadmap
 
 * Implement Document types
     * (x) Order
@@ -136,5 +153,3 @@ $document = $builder->getDocument();
     * (  ) Quotation
     * (  ) RFQ
     * (  ) ReceiptAcknowledgement
-
-

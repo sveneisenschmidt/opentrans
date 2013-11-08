@@ -193,7 +193,7 @@ class OrderInfoNode extends AbstractNode
     public function setPayment($payment)
     {
         if(is_string($payment) === true) {
-            $payment = array($payment => null);
+            $payment = array($payment => array());
         }
 
         $this->payment = $payment;
