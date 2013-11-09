@@ -12,7 +12,6 @@ namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
 use \SE\Component\OpenTrans\Node\NodeInterface;
-use \SE\Component\OpenTrans\Node\AbstractNode;
 use \SE\Component\OpenTrans\Node\Order\DocumentNode;
 use \SE\Component\OpenTrans\Node\Order\HeaderNode;
 use \SE\Component\OpenTrans\Node\Order\OrderInfoNode;
