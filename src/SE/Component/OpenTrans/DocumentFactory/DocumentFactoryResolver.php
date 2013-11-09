@@ -12,7 +12,6 @@ namespace SE\Component\OpenTrans\DocumentFactory;
 
 use \SE\Component\OpenTrans\NodeLoader;
 use \SE\Component\OpenTrans\DocumentType;
-use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
 
 /**
