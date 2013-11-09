@@ -10,7 +10,6 @@
 
 namespace SE\Component\OpenTrans;
 
-use \SE\Component\OpenTrans\Exception\UnknownNodeException;
 use \SE\Component\OpenTrans\Exception\UnknownNodeTypeException;
 
 /**
