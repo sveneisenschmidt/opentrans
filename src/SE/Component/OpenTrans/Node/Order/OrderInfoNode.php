@@ -12,7 +12,6 @@ namespace SE\Component\OpenTrans\Node\Order;
 
 use \JMS\Serializer\Annotation as Serializer;
 
-use \SE\Component\OpenTrans\Util;
 use \SE\Component\OpenTrans\Node\AbstractNode;
 use \SE\Component\OpenTrans\Node\Order\Remark;
 use \SE\Component\OpenTrans\Node\Order\OrderPartiesNode;
