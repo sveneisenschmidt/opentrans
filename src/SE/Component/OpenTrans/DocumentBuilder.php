@@ -15,8 +15,6 @@ use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \JMS\Serializer\Serializer;
 use \JMS\Serializer\SerializerBuilder;
 
-use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\Node\NodeInterface;
 use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
 use \SE\Component\OpenTrans\Exception\MissingDocumentException;
 
