@@ -1,7 +1,7 @@
 OpenTrans
 =========
 
-[![Latest Stable Version](https://poser.pugx.org/se/opentrans/v/stable.png)](https://packagist.org/packages/se/opentrans)
+[![Latest Stable Version](https://poser.pugx.org/se/opentrans/v/stable.png)](https://packagist.org/packages/se/opentrans) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4a0d246b-2d30-4c46-8161-a85c39ec5e7d/mini.png)](https://insight.sensiolabs.com/projects/4a0d246b-2d30-4c46-8161-a85c39ec5e7d)
 
 Allows you to read, create and write OpenTRANS compatible documents from PHP
 
