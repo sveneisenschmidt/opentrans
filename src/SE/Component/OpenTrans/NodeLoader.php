@@ -32,12 +32,12 @@ class NodeLoader
     const NODE_ORDER_HEADER          = 'node.order.header';
     const NODE_ORDER_ITEM            = 'node.order.item';
     const NODE_ORDER_ORDERINFO       = 'node.order.info';
-    const NODE_ORDER_PARTIES         = 'node.node.order.parties';
-    const NODE_ORDER_PARTY           = 'node.node.order.party';
-    const NODE_ORDER_PARTYCOLLECTION = 'node.node.order.partycollection';
-    const NODE_ORDER_PARTYID         = 'node.node.order.partyid';
+    const NODE_ORDER_PARTIES         = 'node.order.parties';
+    const NODE_ORDER_PARTY           = 'node.order.party';
+    const NODE_ORDER_PARTYCOLLECTION = 'node.order.partycollection';
+    const NODE_ORDER_PARTYID         = 'node.order.partyid';
     const NODE_ORDER_REMARK          = 'node.order.remark';
-    const NODE_ORDER_SUMMARY         = 'node.order.sumary';
+    const NODE_ORDER_SUMMARY         = 'node.order.summary';
 
     /**
      *
