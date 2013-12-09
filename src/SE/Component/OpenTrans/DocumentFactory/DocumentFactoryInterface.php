@@ -40,4 +40,10 @@ interface DocumentFactoryInterface
      * @param boolean $build
      */
     public function load(NodeInterface $node, array $data, $build = true);
+
+    /**
+     *
+     * @return \SE\Component\OpenTrans\NodeLoader
+     */
+    public function getLoader();
 }
