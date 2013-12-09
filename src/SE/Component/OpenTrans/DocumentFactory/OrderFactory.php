@@ -46,6 +46,15 @@ class OrderFactory extends AbstractDocumentFactory
 
     /**
      *
+     * @return \SE\Component\OpenTrans\NodeLoader
+     */
+    public function getLoader()
+    {
+        return $this->loader;
+    }
+
+    /**
+     *
      * @param \SE\Component\OpenTrans\NodeLoader $loader
      * @param \SE\Component\OpenTrans\Node\Order\DocumentNode $node
      * @return \SE\Component\OpenTrans\Node\NodeInterface
