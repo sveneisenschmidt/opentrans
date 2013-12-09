@@ -29,6 +29,7 @@ class OrderFactoryTest extends \PHPUnit_Framework_TestCase
         $node  = $factory->createDocument();
 
         $this->assertInstanceOf('\SE\Component\OpenTrans\Node\Order\DocumentNode', $node);
+        $this->assertSame($loader, $factory->getLoader());
     }
 
     /**
