@@ -10,12 +10,12 @@
 
 namespace SE\Component\OpenTrans\EventDispatcher;
 
-use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use \SE\Component\OpenTrans\Util;
-use \SE\Component\OpenTrans\Node\Order;
-use \SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
-use \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
+use SE\Component\OpenTrans\Util;
+use SE\Component\OpenTrans\Node\Order;
+use SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
+use SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
 
 
 

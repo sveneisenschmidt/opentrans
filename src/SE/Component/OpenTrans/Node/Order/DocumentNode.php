@@ -10,12 +10,12 @@
 
 namespace SE\Component\OpenTrans\Node\Order;
 
-use \JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation as Serializer;
 
-use \SE\Component\OpenTrans\Node\AbstractNode;
-use \SE\Component\OpenTrans\Node\Order\HeaderNode;
-use \SE\Component\OpenTrans\Node\Order\ItemNode;
-use \SE\Component\OpenTrans\Node\Order\SummaryNode;
+use SE\Component\OpenTrans\Node\AbstractNode;
+use SE\Component\OpenTrans\Node\Order\HeaderNode;
+use SE\Component\OpenTrans\Node\Order\ItemNode;
+use SE\Component\OpenTrans\Node\Order\SummaryNode;
 
 /**
  *

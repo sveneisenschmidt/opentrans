@@ -10,9 +10,9 @@
 
 namespace SE\Component\OpenTrans\DocumentFactory;
 
-use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\DocumentType;
-use \SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
+use SE\Component\OpenTrans\NodeLoader;
+use SE\Component\OpenTrans\DocumentType;
+use SE\Component\OpenTrans\Exception\UnknownDocumentFactoryException;
 
 /**
  *

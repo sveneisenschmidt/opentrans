@@ -10,8 +10,8 @@
 
 namespace SE\Component\OpenTrans\DocumentFactory;
 
-use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
-use \SE\Component\OpenTrans\Node\AbstractNode;
+use SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
+use SE\Component\OpenTrans\Node\AbstractNode;
 
 /**
  *
