@@ -10,10 +10,10 @@
 
 namespace SE\Component\OpenTrans\Node;
 
-use \JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation as Serializer;
 
-use \SE\Component\OpenTrans\Node\NodeInterface;
-use \SE\Component\OpenTrans\Util;
+use SE\Component\OpenTrans\Node\NodeInterface;
+use SE\Component\OpenTrans\Util;
 
 /**
  *

@@ -10,8 +10,8 @@
 
 namespace SE\Component\OpenTrans\DocumentFactory;
 
-use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\Node\NodeInterface;
+use SE\Component\OpenTrans\NodeLoader;
+use SE\Component\OpenTrans\Node\NodeInterface;
 
 /**
  *

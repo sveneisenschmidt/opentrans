@@ -10,9 +10,9 @@
 
 namespace SE\Component\OpenTrans\Node\Order;
 
-use \JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation as Serializer;
 
-use \SE\Component\OpenTrans\Node\AbstractNode;
+use SE\Component\OpenTrans\Node\AbstractNode;
 
 /**
  *

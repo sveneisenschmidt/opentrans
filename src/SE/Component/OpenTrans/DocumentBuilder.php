@@ -10,17 +10,17 @@
 
 namespace SE\Component\OpenTrans;
 
-use \Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
-use \JMS\Serializer\Serializer;
-use \JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerBuilder;
 
-use \SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
-use \SE\Component\OpenTrans\Exception\MissingDocumentException;
+use SE\Component\OpenTrans\DocumentFactory\DocumentFactoryInterface;
+use SE\Component\OpenTrans\Exception\MissingDocumentException;
 
-use \SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
-use \SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
-use \SE\Component\OpenTrans\EventDispatcher\OrderSubscriber;
+use SE\Component\OpenTrans\EventDispatcher\SerializeEvent;
+use SE\Component\OpenTrans\EventDispatcher\DeserializeEvent;
+use SE\Component\OpenTrans\EventDispatcher\OrderSubscriber;
 
 /**
  *

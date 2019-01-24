@@ -10,9 +10,9 @@
 
 namespace SE\Component\OpenTrans\EventDispatcher;
 
-use \Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 
-use \SE\Component\OpenTrans\Node\NodeInterface;
+use SE\Component\OpenTrans\Node\NodeInterface;
 
 class DeserializeEvent extends Event
 {

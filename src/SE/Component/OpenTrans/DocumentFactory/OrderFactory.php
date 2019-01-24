@@ -10,17 +10,17 @@
 
 namespace SE\Component\OpenTrans\DocumentFactory;
 
-use \SE\Component\OpenTrans\NodeLoader;
-use \SE\Component\OpenTrans\Node\NodeInterface;
-use \SE\Component\OpenTrans\Node\Order\DocumentNode;
-use \SE\Component\OpenTrans\Node\Order\HeaderNode;
-use \SE\Component\OpenTrans\Node\Order\OrderInfoNode;
-use \SE\Component\OpenTrans\Node\Order\SummaryNode;
-use \SE\Component\OpenTrans\Node\Order\OrderPartiesNode;
-use \SE\Component\OpenTrans\Node\Order\PartyNode;
-use \SE\Component\OpenTrans\Node\Order\ItemNode;
+use SE\Component\OpenTrans\NodeLoader;
+use SE\Component\OpenTrans\Node\NodeInterface;
+use SE\Component\OpenTrans\Node\Order\DocumentNode;
+use SE\Component\OpenTrans\Node\Order\HeaderNode;
+use SE\Component\OpenTrans\Node\Order\OrderInfoNode;
+use SE\Component\OpenTrans\Node\Order\SummaryNode;
+use SE\Component\OpenTrans\Node\Order\OrderPartiesNode;
+use SE\Component\OpenTrans\Node\Order\PartyNode;
+use SE\Component\OpenTrans\Node\Order\ItemNode;
 
-use \SE\Component\OpenTrans\DocumentFactory\AbstractDocumentFactory;
+use SE\Component\OpenTrans\DocumentFactory\AbstractDocumentFactory;
 
 /**
  *
