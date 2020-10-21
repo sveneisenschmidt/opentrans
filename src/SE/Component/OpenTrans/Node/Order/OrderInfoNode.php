@@ -87,6 +87,16 @@ class OrderInfoNode extends AbstractNode
     protected $orderParties;
 
     /**
+     * @Serializer\Expose
+     * @Serializer\SerializedName("ORDERTAGS")
+     * @Serializer\Type("array<SE\Component\OpenTrans\Node\Order\OrderTagNode>")
+     * @Serializer\XmlList(inline=false, entry="ORDERTAG")
+     *
+     * @var \SE\Component\OpenTrans\Node\Order\OrderTagNode
+     */
+    protected $orderTags = array();
+
+    /**
      *
      * @param \SE\Component\OpenTrans\Node\Order\RemarkNode $remark
      */
@@ -205,5 +215,32 @@ class OrderInfoNode extends AbstractNode
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     *
+     * @param array|\SE\Component\OpenTrans\Node\Order\OrderTagNode $orderTags
+     */
+    public function setOrderTags(array $orderTags)
+    {
+        $this->orderTags = $orderTags;
+    }
+
+    /**
+     *
+     * @param \SE\Component\OpenTrans\Node\Order\OrderTagNode $orderTag
+     */
+    public function addOrderTag(OrderTagNode $orderTag)
+    {
+        $this->orderTags []= $orderTag;
+    }
+
+    /**
+     *
+     * @return array|\SE\Component\OpenTrans\Node\Order\OrderTagNode
+     */
+    public function getOrderTags()
+    {
+        return $this->orderTags;
     }
 }

@@ -32,6 +32,7 @@ class NodeLoader
     const NODE_ORDER_HEADER          = 'node.order.header';
     const NODE_ORDER_ITEM            = 'node.order.item';
     const NODE_ORDER_ORDERINFO       = 'node.order.info';
+    const NODE_ORDER_ORDERTAG        = 'node.order.ordertag';
     const NODE_ORDER_PARTIES         = 'node.order.parties';
     const NODE_ORDER_PARTY           = 'node.order.party';
     const NODE_ORDER_PARTYCOLLECTION = 'node.order.partycollection';
@@ -57,6 +58,7 @@ class NodeLoader
         self::NODE_ORDER_CONTROLINFO     => '\SE\Component\OpenTrans\Node\Order\ControlInfoNode',
         self::NODE_ORDER_ITEM            => '\SE\Component\OpenTrans\Node\Order\ItemNode',
         self::NODE_ORDER_ORDERINFO       => '\SE\Component\OpenTrans\Node\Order\OrderInfoNode',
+        self::NODE_ORDER_ORDERTAG        => '\SE\Component\OpenTrans\Node\Order\OrderTagNode',
         self::NODE_ORDER_PARTIES         => '\SE\Component\OpenTrans\Node\Order\OrderPartiesNode',
         self::NODE_ORDER_PARTY           => '\SE\Component\OpenTrans\Node\Order\PartyNode',
         self::NODE_ORDER_PARTYID         => '\SE\Component\OpenTrans\Node\Order\PartyIdNode',
