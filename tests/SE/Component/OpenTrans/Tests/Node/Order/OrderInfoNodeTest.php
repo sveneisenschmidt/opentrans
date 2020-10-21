@@ -100,6 +100,27 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
+    public function SetAndGetOrderTags()
+    {
+        $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
+
+        $orderTag1 = new \SE\Component\OpenTrans\Node\Order\OrderTagNode();
+        $orderTag2 = new \SE\Component\OpenTrans\Node\Order\OrderTagNode();
+
+        $node->setOrderTags(array($orderTag1, $orderTag2));
+        $this->assertCount(2, $node->getOrderTags());
+        $this->assertSame(array($orderTag1, $orderTag2), $node->getOrderTags());
+
+        $node->addOrderTag($orderTag2);
+        $this->assertCount(3, $node->getOrderTags());
+        $this->assertSame(array($orderTag1, $orderTag2, $orderTag2), $node->getOrderTags());
+    }
+
+
+    /**
+     *
+     * @test
+     */
     public function SerializeAndDeserializeTest()
     {
         $node = new \SE\Component\OpenTrans\Node\Order\OrderInfoNode();
@@ -116,6 +137,9 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $orderParties->addCustomEntry('placeholder', time());
         $node->setOrderParties($orderParties);
 
+        $orderTag1 = new \SE\Component\OpenTrans\Node\Order\OrderTagNode($tagValue01 = "TAG01");
+        $node->addOrderTag($orderTag1);
+
         $node->setPayment($payment = array(
             'cash' => array(
                 'bank_account' => ($bankAccount = rand(100000,9999999))
@@ -124,13 +148,15 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
 
         $xml = $serializer->serialize($node, 'xml');
         $this->assertTag($parent = array(
-            'tag' => 'ORDER_INFO', 'children' => array( 'count' => 5)
+            'tag' => 'ORDER_INFO', 'children' => array( 'count' => 6)
         ), $xml, $xml);
 
         $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_ID'), $xml);
         $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_DATE'), $xml);
         $this->assertTag(array('parent' => $parent, 'tag' => 'PRICE_CURRENCY'), $xml);
         $this->assertTag(array('parent' => $parent, 'tag' => 'ORDER_PARTIES'), $xml);
+        $this->assertTag($parentOrderTags = array('parent' => $parent, 'tag' => 'ORDERTAGS'), $xml);
+        $this->assertTag(array('parent' => $parentOrderTags, 'tag' => 'ORDERTAG'), $xml);
         $this->assertTag($parent1 = array('parent' => $parent, 'tag' => 'PAYMENT'), $xml);
         $this->assertTag($parent2 = array('parent' => $parent1, 'tag' => 'CASH'), $xml);
         $this->assertTag(array('parent' => $parent2, 'tag' => 'BANK_ACCOUNT'), $xml);
@@ -141,6 +167,9 @@ class OrderInfoNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($orderDate, $actual->getOrderDate());
         $this->assertEquals($orderId, $actual->getOrderId());
         $this->assertEquals($currency, $actual->getCurrency());
+
+        $this->assertCount(1, $orderTags = $actual->getOrderTags());
+        $this->assertEquals($tagValue01, $orderTags[0]->getValue());
 
         // XmlKeyValuePairs can not be deserialized, see https://github.com/schmittjoh/serializer/issues/139
         $this->assertEmpty($actual->getPayment());
